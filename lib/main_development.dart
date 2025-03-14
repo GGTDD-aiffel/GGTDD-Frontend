@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:ggtdd_frontend/config/providers.dart';
 import 'package:provider/provider.dart';
 import 'config/flavor_config.dart';
+import 'config/providers.dart';
 import 'app.dart';
 
 void main() {
   FlavorConfig(
-    flavor: Flavor.production,
-    baseUrl: "https://api.example.com",
+    flavor: Flavor.development,
+    baseUrl: "http://0.0.0.0:8000",
   );
   runApp(
     MultiProvider(

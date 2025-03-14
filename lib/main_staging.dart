@@ -6,8 +6,8 @@ import 'app.dart';
 
 void main() {
   FlavorConfig(
-    flavor: Flavor.production,
-    baseUrl: "https://api.example.com",
+    flavor: Flavor.staging,
+    baseUrl: "https://staging.api.example.com",
   );
   runApp(
     MultiProvider(
