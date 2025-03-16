@@ -17,15 +17,15 @@ class _IntroScreenState extends State<IntroScreen> {
   final List<Map<String, dynamic>> _pages = [
     {
       'title': 'AI로 완벽한 GTD 경험',
-      'color': Colors.blue[100],
+      'image': 'assets/images/Ellipse_43.jpg',
     },
     {
       'title': '쏟아지는 업무를 스트레스 없이 관리하세요.',
-      'color': Colors.green[100],
+      'image': 'assets/images/Ellipse_45.png',
     },
     {
       'title': '개인 맞춤형 AI가 당신의 할 일을 최적화합니다',
-      'color': Colors.orange[100],
+      'image': 'assets/images/Ellipse_44.png',
     },
   ];
 
@@ -63,16 +63,14 @@ class _IntroScreenState extends State<IntroScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            const SizedBox(height: 40),
-            const Text(
-              'GGTDD',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 2,
-              ),
+            const SizedBox(height: 10),
+            Image.asset(
+              'assets/images/ggtdd.png',
+              width: 300,
+              height: 180,
+              fit: BoxFit.contain,
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 0),
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
@@ -91,28 +89,17 @@ class _IntroScreenState extends State<IntroScreen> {
                         Text(
                           _pages[index]['title'],
                           style: const TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 34,
+                            fontWeight: FontWeight.w800,
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 40),
-                        Container(
-                          width: 200,
-                          height: 200,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: _pages[_currentPage]['color'] ??
-                                Colors.grey[300],
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.circle,
-                              size: 150,
-                              color: _pages[_currentPage]['color']
-                                  ?.withOpacity(0.3),
-                            ),
-                          ),
+                        const SizedBox(height: 100),
+                        Image.asset(
+                          _pages[index]['image'],
+                          width: 250,
+                          height: 250,
+                          fit: BoxFit.cover,
                         ),
                       ],
                     ),
@@ -152,7 +139,7 @@ class _IntroScreenState extends State<IntroScreen> {
                 ),
                 child: const Text(
                   '시작하기',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 25),
                 ),
               ),
             ),

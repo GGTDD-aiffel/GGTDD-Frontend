@@ -27,4 +27,11 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
+  assets:
+    - assets/images/
+    - assets/images/ggtdd.png
+    - assets/images/Ellipse_43.jpg
+    - assets/images/Ellipse_44.png
+    - assets/images/Ellipse_45.png
+
   #
