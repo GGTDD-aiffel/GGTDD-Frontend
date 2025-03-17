@@ -302,6 +302,32 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ],
                 ),
               ),
+              const SizedBox(height: 20),
+              if (_name != null &&
+                  _location != null &&
+                  _birthday != null &&
+                  _occupation != null &&
+                  _mbti != null) ...[
+                const SizedBox(height: 40),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Get.toNamed('/inbox');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: const Text(
+                      '다음',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ),
+              ],
             ],
           ),
         ),
