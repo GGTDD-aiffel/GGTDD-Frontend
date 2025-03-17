@@ -69,7 +69,7 @@ class _IntroScreenState extends State<IntroScreen> {
       'title': '그 다음, AI가 정리해줍니다.\n복잡한 할 일이 명확한 단계로 바꾸고,\n무엇부터 할지 알려줘요.',
       'image': 'assets/images/communication-skills_1.png',
       'boldText': ['그 다음, AI가 정리해줍니다.'],
-      'grayText': ['복잡한 할 일이'],
+      'grayText': ['복잡한 할 일'],
       'redText': ['명확한 단계'],
     },
     {
@@ -130,42 +130,72 @@ class _IntroScreenState extends State<IntroScreen> {
     List<String> lines = text.split('\n');
 
     for (String line in lines) {
-      bool isRed = redText?.any((red) => line.contains(red)) ?? false;
-      bool isGray = grayText?.any((gray) => line.contains(gray)) ?? false;
-      bool isBold = boldText?.any((bold) => line.contains(bold)) ?? false;
-
-      if (isRed) {
+      if (line.contains('복잡한 할 일이 명확한 단계로 바꾸고,')) {
         textSpans.add(TextSpan(
-          text: line + '\n',
+          text: '복잡한 할 일',
+          style: TextStyle(
+            fontSize: 23,
+            color: Colors.grey[600],
+          ),
+        ));
+        textSpans.add(TextSpan(
+          text: '이',
+          style: const TextStyle(
+            fontSize: 23,
+          ),
+        ));
+        textSpans.add(TextSpan(
+          text: '명확한 단계',
           style: const TextStyle(
             fontSize: 23,
             fontWeight: FontWeight.w800,
             color: Colors.red,
           ),
         ));
-      } else if (isGray) {
         textSpans.add(TextSpan(
-          text: line + '\n',
-          style: TextStyle(
-            fontSize: 23,
-            color: Colors.grey[600],
-          ),
-        ));
-      } else if (isBold) {
-        textSpans.add(TextSpan(
-          text: line + '\n',
+          text: '로 바뀌고,\n',
           style: const TextStyle(
             fontSize: 23,
-            fontWeight: FontWeight.w800,
           ),
         ));
       } else {
-        textSpans.add(TextSpan(
-          text: line + '\n',
-          style: const TextStyle(
-            fontSize: 23,
-          ),
-        ));
+        bool isRed = redText?.any((red) => line.contains(red)) ?? false;
+        bool isGray = grayText?.any((gray) => line.contains(gray)) ?? false;
+        bool isBold = boldText?.any((bold) => line.contains(bold)) ?? false;
+
+        if (isRed) {
+          textSpans.add(TextSpan(
+            text: line + '\n',
+            style: const TextStyle(
+              fontSize: 23,
+              fontWeight: FontWeight.w800,
+              color: Colors.red,
+            ),
+          ));
+        } else if (isGray) {
+          textSpans.add(TextSpan(
+            text: line + '\n',
+            style: TextStyle(
+              fontSize: 23,
+              color: Colors.grey[600],
+            ),
+          ));
+        } else if (isBold) {
+          textSpans.add(TextSpan(
+            text: line + '\n',
+            style: const TextStyle(
+              fontSize: 23,
+              fontWeight: FontWeight.w800,
+            ),
+          ));
+        } else {
+          textSpans.add(TextSpan(
+            text: line + '\n',
+            style: const TextStyle(
+              fontSize: 23,
+            ),
+          ));
+        }
       }
     }
 
