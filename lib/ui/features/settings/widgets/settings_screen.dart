@@ -12,7 +12,24 @@ class SettingsScreen extends StatelessWidget {
     print('SettingsScreen userId: $userId');
 
     return Scaffold(
-      appBar: AppBar(title: const Text('설정')),
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          '설정',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        leading: IconButton(
+          icon: const SizedBox(
+            width: 36,
+            height: 36,
+            child: ImageIcon(AssetImage('assets/icons/chevron left.png')),
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

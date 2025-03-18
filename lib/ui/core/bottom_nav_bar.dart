@@ -26,25 +26,48 @@ class AppBottomNavBar extends StatelessWidget {
       selectedItemColor: Colors.blueAccent,
       unselectedItemColor: Colors.grey,
       showUnselectedLabels: true,
+      type: BottomNavigationBarType.fixed,
+      selectedFontSize: 12,
+      unselectedFontSize: 14,
       items: const [
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
+          icon: SizedBox(
+            width: 30,
+            height: 30,
+            child: ImageIcon(AssetImage('assets/icons/Home 7.png')),
+          ),
           label: '홈',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.inbox),
+          icon: SizedBox(
+            width: 30,
+            height: 30,
+            child: ImageIcon(AssetImage('assets/icons/box_open.png')),
+          ),
           label: '수집',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.search),
+          icon: SizedBox(
+            width: 30,
+            height: 30,
+            child: ImageIcon(AssetImage('assets/icons/Notes-lines-alt.png')),
+          ),
           label: '구체화',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.checklist),
+          icon: SizedBox(
+            width: 30,
+            height: 30,
+            child: ImageIcon(AssetImage('assets/icons/Send.png')),
+          ),
           label: '액션',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
+          icon: SizedBox(
+            width: 30,
+            height: 30,
+            child: ImageIcon(AssetImage('assets/icons/Setting_5.png')),
+          ),
           label: '설정',
         ),
       ],

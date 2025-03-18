@@ -607,7 +607,7 @@ class _OnBoardingInfoScreenState extends State<OnBoardingInfoScreen> {
     showDialog(
       context: context,
       builder: (context) => StatefulBuilder(
-        builder: (context, setState) => Dialog(
+        builder: (context, setDialogState) => Dialog(
           backgroundColor: Colors.white,
           insetPadding: const EdgeInsets.symmetric(horizontal: 0),
           child: Container(
@@ -629,7 +629,7 @@ class _OnBoardingInfoScreenState extends State<OnBoardingInfoScreen> {
                   '에너지 충전 방식',
                   'energy',
                   {'E': '외향적', 'I': '내향적'},
-                  setState,
+                  setDialogState,
                   tooltips,
                   showTooltip,
                   context,
@@ -639,7 +639,7 @@ class _OnBoardingInfoScreenState extends State<OnBoardingInfoScreen> {
                   '정보 처리 방식',
                   'information',
                   {'S': '감각적', 'N': '직관적'},
-                  setState,
+                  setDialogState,
                   tooltips,
                   showTooltip,
                   context,
@@ -649,7 +649,7 @@ class _OnBoardingInfoScreenState extends State<OnBoardingInfoScreen> {
                   '의사결정 방식',
                   'decision',
                   {'T': '사고형', 'F': '감정형'},
-                  setState,
+                  setDialogState,
                   tooltips,
                   showTooltip,
                   context,
@@ -659,7 +659,7 @@ class _OnBoardingInfoScreenState extends State<OnBoardingInfoScreen> {
                   '생활 조직 방식',
                   'lifestyle',
                   {'J': '판단형', 'P': '인식형'},
-                  setState,
+                  setDialogState,
                   tooltips,
                   showTooltip,
                   context,
@@ -732,7 +732,7 @@ class _OnBoardingInfoScreenState extends State<OnBoardingInfoScreen> {
     String title,
     String key,
     Map<String, String> options,
-    StateSetter setState,
+    StateSetter setDialogState,
     Map<String, String> tooltips,
     Function(BuildContext, String) showTooltip,
     BuildContext context,
@@ -761,7 +761,7 @@ class _OnBoardingInfoScreenState extends State<OnBoardingInfoScreen> {
                 },
                 child: ElevatedButton(
                   onPressed: () {
-                    setState(() {
+                    setDialogState(() {
                       if (_mbtiSelections[key] == entry.key) {
                         _mbtiSelections[key] = '';
                       } else {
