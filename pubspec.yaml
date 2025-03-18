@@ -32,6 +32,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/icons/
     - assets/images/ggtdd.png
     - assets/images/Ellipse_43.jpg
     - assets/images/Ellipse_44.png
@@ -44,5 +45,10 @@ flutter:
     - assets/images/communication-skills_1.png
     - assets/images/loop_1.png
     - assets/images/improve_1.png
+    - assets/icons/Home 7.png
+    - assets/icons/box_open.png
+    - assets/icons/Notes-lines-alt.png
+    - assets/icons/Send.png
+    - assets/icons/Setting_5.png
 
   #
