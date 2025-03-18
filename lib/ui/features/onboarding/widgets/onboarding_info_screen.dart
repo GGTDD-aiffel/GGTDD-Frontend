@@ -508,6 +508,12 @@ class _OnBoardingInfoScreenState extends State<OnBoardingInfoScreen> {
                               ? () {
                                   setState(() {
                                     _mbti = selectedMbti;
+                                    _mbtiSelections = {
+                                      'energy': '',
+                                      'information': '',
+                                      'decision': '',
+                                      'lifestyle': '',
+                                    };
                                   });
                                   Navigator.pop(context);
                                 }
@@ -688,6 +694,12 @@ class _OnBoardingInfoScreenState extends State<OnBoardingInfoScreen> {
                         ? () {
                             setState(() {
                               _mbti = _mbtiSelections.values.join('');
+                              _mbtiSelections = {
+                                'energy': '',
+                                'information': '',
+                                'decision': '',
+                                'lifestyle': '',
+                              };
                             });
                             Navigator.pop(context);
                           }
