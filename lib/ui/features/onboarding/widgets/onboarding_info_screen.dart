@@ -20,7 +20,6 @@ class _OnBoardingInfoScreenState extends State<OnBoardingInfoScreen> {
   int? _selectedMonth;
   int? _selectedDay;
   int? _selectedOccupationIndex;
-  String? _selectedMbti;
   Map<String, String> _mbtiSelections = {
     'energy': '',
     'information': '',
@@ -321,7 +320,8 @@ class _OnBoardingInfoScreenState extends State<OnBoardingInfoScreen> {
                   child: ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        _birthday = '${_years[0]}년 ${_months[0]}월 ${_days[0]}일';
+                        _birthday =
+                            '${_selectedYear ?? _years[0]}년 ${_selectedMonth ?? _months[0]}월 ${_selectedDay ?? _days[0]}일';
                       });
                       Navigator.of(context).pop();
                     },
