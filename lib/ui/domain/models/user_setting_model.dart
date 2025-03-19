@@ -1,12 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class UserSettings {
   final String userSettingId;
-  final String userId; // 외래키
+  final String userId;
   final bool introPageEnabled;
   final bool landingPageEnabled;
   final bool focusPageEnabled;
-  final String theme; // "dark", "light"
+  final String theme;
   final String language;
   final String font;
 
