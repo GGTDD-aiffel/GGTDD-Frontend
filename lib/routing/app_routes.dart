@@ -17,8 +17,6 @@ import 'package:ggtdd_frontend/ui/features/settings/widgets/settings_screen.dart
 import 'package:ggtdd_frontend/ui/features/settings/widgets/timer_settings_screen.dart';
 import 'package:ggtdd_frontend/ui/features/settings/widgets/user_info_screen.dart';
 import 'package:ggtdd_frontend/ui/features/welcome/widgets/welcome_screen.dart';
-import '../ui/user/widgets/user_screen.dart';
-import '../ui/user/widgets/user_detail_screen.dart';
 
 class AppRoutes {
   static const String home = '/';
@@ -103,8 +101,6 @@ class AppRoutes {
       name: focusTimer,
       page: () => FocusTimerScreen(id: Get.parameters['id'] ?? ''),
     ),
-    GetPage(name: user, page: () => UserScreen()),
-    GetPage(name: userDetail, page: () => UserDetailScreen()),
   ];
 
   static String get initial => intro;

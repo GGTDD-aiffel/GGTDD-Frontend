@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-enum Status { active, inactive, deleted }
-
 class User {
   final String userId;
   final String? occupationId;
@@ -14,7 +12,7 @@ class User {
   final DateTime createdAt;
   final DateTime? updatedAt;
   final DateTime? deletedAt;
-  final Status status;
+  final String status;
   final bool isPremium;
 
   User({
@@ -50,7 +48,7 @@ class User {
       deletedAt: json['deleted_at'] != null
           ? (json['deleted_at'] as Timestamp).toDate()
           : null,
-      status: json['status'] as Status,
+      status: json['status'],
       isPremium: json['is_premium'] as bool,
     );
   }

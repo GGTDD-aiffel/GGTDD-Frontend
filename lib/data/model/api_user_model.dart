@@ -5,13 +5,11 @@ import 'package:ggtdd_frontend/ui/domain/models/user_model.dart';
 // 유저 생성 요청 DTO
 class UserCreateRequest {
   final String uid;
-  final String userId;
   final String email;
   final String name;
 
   UserCreateRequest({
     required this.uid,
-    required this.userId,
     required this.email,
     required this.name,
   });
@@ -19,7 +17,6 @@ class UserCreateRequest {
   Map<String, dynamic> toJson() {
     return {
       'uid': uid,
-      'user_id': userId,
       'email': email,
       'name': name,
       'birth_date': null,
