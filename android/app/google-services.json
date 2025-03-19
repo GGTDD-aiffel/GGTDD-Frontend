@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "427315227746",
+    "project_id": "ggtdd-900a3",
+    "storage_bucket": "ggtdd-900a3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427315227746:android:68a047b11ba51d64d0353b",
+        "android_client_info": {
+          "package_name": "com.example.ggtdd_frontend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "427315227746-kctudq6vprep6kino9nt8flhc7rh21sl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5GzvUWfPkp-OQKoUH-SAHvUtuxtagts4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "427315227746-kctudq6vprep6kino9nt8flhc7rh21sl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "427315227746-i426agbu37btjjkms2tjh71t43sl4rkg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ggtddFrontend"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
