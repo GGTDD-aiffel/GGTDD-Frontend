@@ -12,12 +12,16 @@ class UserController extends ChangeNotifier {
 
   UserController({required UserService service}) : _service = service;
 
-  // 유저 조회
   Future<void> fetchUser(String userId) async {
     _isLoading = true;
     notifyListeners();
     try {
-      _user = await _service.getUser(userId);
+      final response = await _service.getUser(userId);
+      if (response.code == 200 && response.data != null) {
+        _user = response.data;
+      } else {
+        print('유저 조회 실패: ${response.message}');
+      }
     } catch (e) {
       print('유저 조회 오류: $e');
     } finally {
@@ -26,14 +30,18 @@ class UserController extends ChangeNotifier {
     }
   }
 
-  // 유저 수정
   Future<void> updateUser(String userId, UserUpdateRequest request) async {
     _isLoading = true;
     notifyListeners();
     try {
       print('Sending update request: ${request.toJson()}');
-      _user = await _service.updateUser(userId, request);
-      print('Updated user data: ${_user?.user.toString()}');
+      final response = await _service.updateUser(userId, request);
+      if (response.code == 200 && response.data != null) {
+        _user = response.data;
+        print('Updated user data: ${_user?.user.toString()}');
+      } else {
+        print('유저 수정 실패: ${response.message}');
+      }
     } catch (e) {
       print('유저 수정 오류: $e');
     } finally {

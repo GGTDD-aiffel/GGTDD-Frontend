@@ -128,6 +128,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                         occupationId: _currentOccupationId,
                         updatedAt: DateTime.now(),
                       );
+                      print('Modal update request: ${request.toJson()}');
                       await _userController.updateUser(widget.userId, request);
                       Navigator.pop(context);
                     },
@@ -199,10 +200,8 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                           controller: _residenceController,
                           decoration: const InputDecoration(labelText: '거주지'),
                         ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        Text('직업'),
+                        const SizedBox(height: 10.0),
+                        const Text('직업'),
                         GestureDetector(
                           onTap: () => _showOccupationModal(context),
                           child: Padding(
