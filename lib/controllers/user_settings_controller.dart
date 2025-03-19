@@ -18,7 +18,13 @@ class UserSettingsController extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      _settings = await _service.getUserSettings(settingId);
+      final response = await _service.getUserSettings(settingId);
+      if (response.code == 200 && response.data != null) {
+        _settings = response.data!.settings;
+        print('유저 설정 조회 성공: ${response.message}');
+      } else {
+        print('유저 설정 조회 실패: ${response.message} (code: ${response.code})');
+      }
     } catch (e) {
       print('유저 설정 조회 오류: $e');
     } finally {
@@ -32,7 +38,13 @@ class UserSettingsController extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      _settings = await _service.updateUserSettings(settingId, request);
+      final response = await _service.updateUserSettings(settingId, request);
+      if (response.code == 200 && response.data != null) {
+        _settings = response.data;
+        print('유저 설정 수정 성공: ${response.message}');
+      } else {
+        print('유저 설정 수정 실패: ${response.message} (code: ${response.code})');
+      }
     } catch (e) {
       print('유저 설정 수정 오류: $e');
     } finally {

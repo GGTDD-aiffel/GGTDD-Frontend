@@ -19,7 +19,7 @@ class OccupationRepository {
           code: 200,
           status: 'success',
           message: '직업 생성 성공',
-          data: Occupation.fromJson(data),
+          data: Occupation.fromJson(data, docId: occupationId),
         );
       }
       throw Exception('생성된 직업을 조회하지 못했습니다.');
@@ -100,7 +100,7 @@ class OccupationRepository {
           code: 200,
           status: 'success',
           message: '직업 수정 성공',
-          data: Occupation.fromJson(data),
+          data: Occupation.fromJson(data, docId: occupationId),
         );
       }
       throw Exception('수정된 직업을 조회하지 못했습니다.');

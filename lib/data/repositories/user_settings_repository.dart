@@ -4,13 +4,11 @@ import 'package:ggtdd_frontend/ui/domain/models/user_setting_model.dart';
 import 'package:ggtdd_frontend/utils/firebase_utils.dart';
 
 class UserSettingsRepository {
-  // 유저 설정 생성
-  Future<UserSettings> createUserSettings(String userId) async {
+  Future<UserSettingsCreateResponse> createUserSettings(String userId) async {
     try {
       final settingId =
           FirebaseFirestore.instance.collection('user_settings').doc().id;
       final settingsData = {
-        'user_setting_id': settingId,
         'user_id': userId,
         'intro_page_enabled': true,
         'landing_page_enabled': false,
@@ -24,32 +22,57 @@ class UserSettingsRepository {
       final data =
           await FirebaseUtils.fetchDocument('user_settings', settingId);
       if (data != null) {
-        return UserSettings.fromJson(data);
+        return UserSettingsCreateResponse(
+          code: 200,
+          status: 'success',
+          message: '유저 설정 생성 성공',
+          data: UserSettings.fromJson(data, docId: settingId),
+        );
       }
       throw Exception('생성된 유저 설정을 조회하지 못했습니다.');
     } catch (e) {
       print('유저 설정 생성 오류: $e');
-      rethrow;
+      return UserSettingsCreateResponse(
+        code: 500,
+        status: 'error',
+        message: '유저 설정 생성 실패: $e',
+        data: null,
+      );
     }
   }
 
-  // 유저 설정 조회
-  Future<UserSettings?> fetchUserSettings(String settingId) async {
+  Future<UserSettingsResponseDto> fetchUserSettings(String settingId) async {
     try {
       final data =
           await FirebaseUtils.fetchDocument('user_settings', settingId);
       if (data != null) {
-        return UserSettings.fromJson(data);
+        return UserSettingsResponseDto(
+          code: 200,
+          status: 'success',
+          message: '유저 설정 조회 성공',
+          data: UserSettingsResponse(
+            settings: UserSettings.fromJson(data, docId: settingId),
+          ),
+        );
       }
-      return null;
+      return UserSettingsResponseDto(
+        code: 404,
+        status: 'not_found',
+        message: '유저 설정을 찾을 수 없습니다.',
+        data: null,
+      );
     } catch (e) {
       print('유저 설정 조회 오류: $e');
-      return null;
+      return UserSettingsResponseDto(
+        code: 500,
+        status: 'error',
+        message: '유저 설정 조회 실패: $e',
+        data: null,
+      );
     }
   }
 
-  // 유저 설정 수정
-  Future<UserSettings> updateUserSettings(
+  Future<UserSettingsUpdateResponse> updateUserSettings(
       String settingId, UserSettingsUpdateRequest request) async {
     try {
       await FirebaseUtils.updateDocument(
@@ -57,22 +80,43 @@ class UserSettingsRepository {
       final data =
           await FirebaseUtils.fetchDocument('user_settings', settingId);
       if (data != null) {
-        return UserSettings.fromJson(data);
+        return UserSettingsUpdateResponse(
+          code: 200,
+          status: 'success',
+          message: '유저 설정 수정 성공',
+          data: UserSettings.fromJson(data, docId: settingId),
+        );
       }
       throw Exception('수정된 유저 설정을 조회하지 못했습니다.');
     } catch (e) {
       print('유저 설정 수정 오류: $e');
-      rethrow;
+      return UserSettingsUpdateResponse(
+        code: 500,
+        status: 'error',
+        message: '유저 설정 수정 실패: $e',
+        data: null,
+      );
     }
   }
 
-  // 유저 설정 삭제
-  Future<void> deleteUserSettings(String settingId) async {
+  Future<UserSettingsDeleteResponse> deleteUserSettings(
+      String settingId) async {
     try {
       await FirebaseUtils.deleteDocument('user_settings', settingId);
+      return UserSettingsDeleteResponse(
+        code: 200,
+        status: 'success',
+        message: '유저 설정 삭제 성공',
+        data: null,
+      );
     } catch (e) {
       print('유저 설정 삭제 오류: $e');
-      rethrow;
+      return UserSettingsDeleteResponse(
+        code: 500,
+        status: 'error',
+        message: '유저 설정 삭제 실패: $e',
+        data: null,
+      );
     }
   }
 }

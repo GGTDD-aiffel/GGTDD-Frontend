@@ -8,10 +8,12 @@ class OccupationListResponse {
 
   OccupationListResponse({required this.occupations});
 
-  factory OccupationListResponse.fromJson(Map<String, dynamic> json) {
+  factory OccupationListResponse.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
     return OccupationListResponse(
       occupations: (json['occupations'] as List<dynamic>)
-          .map((e) => Occupation.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              Occupation.fromJson(e as Map<String, dynamic>, docId: docId))
           .toList(),
     );
   }
@@ -29,10 +31,12 @@ class OccupationResponse {
 
   OccupationResponse({required this.occupation});
 
-  factory OccupationResponse.fromJson(Map<String, dynamic> json) {
+  factory OccupationResponse.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
     return OccupationResponse(
-      occupation:
-          Occupation.fromJson(json['occupation'] as Map<String, dynamic>),
+      occupation: Occupation.fromJson(
+          json['occupation'] as Map<String, dynamic>,
+          docId: docId),
     );
   }
 

@@ -19,9 +19,10 @@ class UserSettings {
     required this.font,
   });
 
-  factory UserSettings.fromJson(Map<String, dynamic> json) {
+  factory UserSettings.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
     return UserSettings(
-      userSettingId: json['user_setting_id'] as String,
+      userSettingId: docId,
       userId: json['user_id'] as String,
       introPageEnabled: json['intro_page_enabled'] as bool,
       landingPageEnabled: json['landing_page_enabled'] as bool,
@@ -34,7 +35,6 @@ class UserSettings {
 
   Map<String, dynamic> toJson() {
     return {
-      'user_setting_id': userSettingId,
       'user_id': userId,
       'intro_page_enabled': introPageEnabled,
       'landing_page_enabled': landingPageEnabled,
