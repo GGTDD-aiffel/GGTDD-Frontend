@@ -23,6 +23,26 @@ class OccupationListResponse {
   }
 }
 
+// 직업 단일 조회 응답 DTO (추가)
+class OccupationResponse {
+  final Occupation occupation;
+
+  OccupationResponse({required this.occupation});
+
+  factory OccupationResponse.fromJson(Map<String, dynamic> json) {
+    return OccupationResponse(
+      occupation:
+          Occupation.fromJson(json['occupation'] as Map<String, dynamic>),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'occupation': occupation.toJson(),
+    };
+  }
+}
+
 // 직업 생성 요청 DTO
 class OccupationCreateRequest {
   final String occupationName;
@@ -52,6 +72,7 @@ class OccupationUpdateRequest {
 
 // BaseResponse 적용
 typedef OccupationListResponseDto = BaseResponse<OccupationListResponse>;
+typedef OccupationResponseDto = BaseResponse<OccupationResponse>;
 typedef OccupationCreateResponse = BaseResponse<Occupation>;
 typedef OccupationUpdateResponse = BaseResponse<Occupation>;
 typedef OccupationDeleteResponse = BaseResponse<void>;

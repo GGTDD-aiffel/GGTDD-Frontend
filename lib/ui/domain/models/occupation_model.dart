@@ -11,11 +11,13 @@ class Occupation {
     required this.createdAt,
   });
 
-  factory Occupation.fromJson(Map<String, dynamic> json) {
+  factory Occupation.fromJson(Map<String, dynamic> json, {String? docId}) {
     return Occupation(
-      occupationId: json['occupation_id'] as String,
-      occupationName: json['occupation_name'] as String,
-      createdAt: (json['created_at'] as Timestamp).toDate(),
+      occupationId: docId as String,
+      occupationName: json['occupation_name'] as String? ?? 'Unknown',
+      createdAt: json['created_at'] != null
+          ? (json['created_at'] as Timestamp).toDate()
+          : DateTime.now(),
     );
   }
 
@@ -23,7 +25,7 @@ class Occupation {
     return {
       'occupation_id': occupationId,
       'occupation_name': occupationName,
-      'created_at': Timestamp.fromDate(createdAt),
+      'created_at': createdAt,
     };
   }
 }

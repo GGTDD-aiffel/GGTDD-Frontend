@@ -21,9 +21,11 @@ class OccupationController extends ChangeNotifier {
     notifyListeners();
     try {
       final response = await _service.getOccupations();
-      _occupations = response.occupations;
+      print('Fetched occupations raw: ${response.data?.occupations}');
+      _occupations = response.data?.occupations ?? [];
     } catch (e) {
       print('직업 리스트 조회 오류: $e');
+      _occupations = [];
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -34,9 +36,12 @@ class OccupationController extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      _occupation = await _service.getOccupation(occupationId);
+      final response = await _service.getOccupation(occupationId);
+      _occupation = response.data?.occupation;
+      print('Fetched occupation: ${_occupation?.toJson()}');
     } catch (e) {
       print('직업 조회 오류: $e');
+      _occupation = null;
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -48,7 +53,8 @@ class OccupationController extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      _occupation = await _service.updateOccupation(occupationId, request);
+      final response = await _service.updateOccupation(occupationId, request);
+      _occupation = response.data;
     } catch (e) {
       print('직업 수정 오류: $e');
     } finally {

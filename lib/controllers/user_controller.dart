@@ -31,7 +31,9 @@ class UserController extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
+      print('Sending update request: ${request.toJson()}');
       _user = await _service.updateUser(userId, request);
+      print('Updated user data: ${_user?.user.toString()}');
     } catch (e) {
       print('유저 수정 오류: $e');
     } finally {

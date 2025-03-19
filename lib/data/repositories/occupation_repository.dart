@@ -4,57 +4,91 @@ import 'package:ggtdd_frontend/ui/domain/models/occupation_model.dart';
 import 'package:ggtdd_frontend/utils/firebase_utils.dart';
 
 class OccupationRepository {
-  // 직업 생성
-  Future<Occupation> createOccupation(OccupationCreateRequest request) async {
+  Future<OccupationCreateResponse> createOccupation(
+      OccupationCreateRequest request) async {
     try {
       final occupationId =
           FirebaseFirestore.instance.collection('occupations').doc().id;
-      final occupationData = request.toJson()..['occupation_id'] = occupationId;
+      final occupationData = request.toJson();
       await FirebaseUtils.writeDocument(
           'occupations', occupationId, occupationData);
       final data =
           await FirebaseUtils.fetchDocument('occupations', occupationId);
       if (data != null) {
-        return Occupation.fromJson(data);
+        return OccupationCreateResponse(
+          code: 200,
+          status: 'success',
+          message: '직업 생성 성공',
+          data: Occupation.fromJson(data),
+        );
       }
       throw Exception('생성된 직업을 조회하지 못했습니다.');
     } catch (e) {
       print('직업 생성 오류: $e');
-      rethrow;
+      return OccupationCreateResponse(
+        code: 500,
+        status: 'error',
+        message: '직업 생성 실패: $e',
+        data: null,
+      );
     }
   }
 
-  // 직업 조회
-  Future<Occupation?> fetchOccupation(String occupationId) async {
+  Future<OccupationListResponseDto> fetchOccupations() async {
+    try {
+      final snapshot =
+          await FirebaseFirestore.instance.collection('occupations').get();
+      final occupations = snapshot.docs.map((doc) {
+        return Occupation.fromJson(doc.data(), docId: doc.id);
+      }).toList();
+      return OccupationListResponseDto(
+        code: 200,
+        status: 'success',
+        message: '직업 리스트 조회 성공',
+        data: OccupationListResponse(occupations: occupations),
+      );
+    } catch (e) {
+      print('직업 리스트 조회 오류: $e');
+      return OccupationListResponseDto(
+        code: 500,
+        status: 'error',
+        message: '직업 리스트 조회 실패: $e',
+        data: null,
+      );
+    }
+  }
+
+  Future<OccupationResponseDto> fetchOccupation(String occupationId) async {
     try {
       final data =
           await FirebaseUtils.fetchDocument('occupations', occupationId);
       if (data != null) {
-        return Occupation.fromJson(data);
+        return OccupationResponseDto(
+          code: 200,
+          status: 'success',
+          message: '직업 조회 성공',
+          data: OccupationResponse(
+              occupation: Occupation.fromJson(data, docId: occupationId)),
+        );
       }
-      return null;
+      return OccupationResponseDto(
+        code: 404,
+        status: 'not_found',
+        message: '직업을 찾을 수 없습니다.',
+        data: null,
+      );
     } catch (e) {
       print('직업 조회 오류: $e');
-      return null;
+      return OccupationResponseDto(
+        code: 500,
+        status: 'error',
+        message: '직업 조회 실패: $e',
+        data: null,
+      );
     }
   }
 
-  // 직업 리스트 조회
-  Future<OccupationListResponse> fetchOccupations() async {
-    try {
-      final data =
-          await FirebaseUtils.fetchCollection(collection: 'occupations');
-      final occupations =
-          data.map((item) => Occupation.fromJson(item)).toList();
-      return OccupationListResponse(occupations: occupations);
-    } catch (e) {
-      print('직업 리스트 조회 오류: $e');
-      rethrow;
-    }
-  }
-
-  // 직업 수정
-  Future<Occupation> updateOccupation(
+  Future<OccupationUpdateResponse> updateOccupation(
       String occupationId, OccupationUpdateRequest request) async {
     try {
       await FirebaseUtils.updateDocument(
@@ -62,22 +96,42 @@ class OccupationRepository {
       final data =
           await FirebaseUtils.fetchDocument('occupations', occupationId);
       if (data != null) {
-        return Occupation.fromJson(data);
+        return OccupationUpdateResponse(
+          code: 200,
+          status: 'success',
+          message: '직업 수정 성공',
+          data: Occupation.fromJson(data),
+        );
       }
       throw Exception('수정된 직업을 조회하지 못했습니다.');
     } catch (e) {
       print('직업 수정 오류: $e');
-      rethrow;
+      return OccupationUpdateResponse(
+        code: 500,
+        status: 'error',
+        message: '직업 수정 실패: $e',
+        data: null,
+      );
     }
   }
 
-  // 직업 삭제
-  Future<void> deleteOccupation(String occupationId) async {
+  Future<OccupationDeleteResponse> deleteOccupation(String occupationId) async {
     try {
       await FirebaseUtils.deleteDocument('occupations', occupationId);
+      return OccupationDeleteResponse(
+        code: 200,
+        status: 'success',
+        message: '직업 삭제 성공',
+        data: null,
+      );
     } catch (e) {
       print('직업 삭제 오류: $e');
-      rethrow;
+      return OccupationDeleteResponse(
+        code: 500,
+        status: 'error',
+        message: '직업 삭제 실패: $e',
+        data: null,
+      );
     }
   }
 }
