@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ggtdd_frontend/ui/core/bottom_nav_bar.dart';
+import 'package:ggtdd_frontend/ui/core/widgets/bottom_nav_bar.dart';
 
 class TimerSettingsScreen extends StatelessWidget {
   final String userId;

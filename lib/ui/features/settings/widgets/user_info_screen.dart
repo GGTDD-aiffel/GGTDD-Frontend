@@ -6,6 +6,7 @@ import 'package:ggtdd_frontend/data/repositories/occupation_repository.dart';
 import 'package:ggtdd_frontend/data/repositories/user_repository.dart';
 import 'package:ggtdd_frontend/data/services/occupation_service.dart';
 import 'package:ggtdd_frontend/data/services/user_service.dart';
+import 'package:ggtdd_frontend/ui/core/widgets/custom_simple_app_bar.dart';
 
 class UserInfoScreen extends StatefulWidget {
   final String userId;
@@ -157,7 +158,9 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('유저 정보')),
+      appBar: const CustomSimpleAppBar(
+        title: '유저 정보',
+      ),
       body: !_isDataLoaded
           ? const Center(child: CircularProgressIndicator())
           : AnimatedBuilder(

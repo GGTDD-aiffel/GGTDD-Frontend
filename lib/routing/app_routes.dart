@@ -38,8 +38,6 @@ class AppRoutes {
   static const String settingsAppFeatures = '/settings/:user_id/app_features';
   static const String settingsTimer = '/settings/:user_id/timer';
   static const String focusTimer = '/focus/:id/timer';
-  static const String user = '/user';
-  static const String userDetail = '/user/detail';
 
   static final pages = [
     GetPage(name: home, page: () => MainScreen()),
