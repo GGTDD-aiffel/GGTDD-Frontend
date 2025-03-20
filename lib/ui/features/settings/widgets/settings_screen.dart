@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:ggtdd_frontend/routing/app_routes.dart';
 import 'package:ggtdd_frontend/ui/core/widgets/bottom_nav_bar.dart';
@@ -33,9 +34,9 @@ class SettingsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 6.0),
-                    child: const Text(
+                  const Padding(
+                    padding: EdgeInsets.only(left: 6.0),
+                    child: Text(
                       '개인화',
                       style: TextStyle(
                         fontSize: 16,
@@ -44,7 +45,7 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const Gap(12),
                   CustomCard(
                     backgroundColor: const Color(0xFFFFFFFF),
                     width: double.infinity,
@@ -69,12 +70,12 @@ class SettingsScreen extends StatelessWidget {
                             );
                           },
                         ),
-                        const SizedBox(height: 8),
+                        const Gap(8),
                         CustomDivider(
                           alignment: Alignment.centerRight,
                           width: cardWidth * 0.85,
                         ),
-                        const SizedBox(height: 8),
+                        const Gap(8),
                         CustomIconTextButton(
                           leftIcon: Icons.account_tree,
                           text: '맥락',
@@ -94,10 +95,10 @@ class SettingsScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 24),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 6.0),
-                    child: const Text(
+                  const Gap(24),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 6.0),
+                    child: Text(
                       '기능',
                       style: TextStyle(
                         fontSize: 16,
@@ -106,7 +107,7 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const Gap(12),
                   CustomCard(
                     backgroundColor: const Color(0xFFFFFFFF),
                     width: double.infinity,
@@ -131,12 +132,12 @@ class SettingsScreen extends StatelessWidget {
                             );
                           },
                         ),
-                        const SizedBox(height: 8),
+                        const Gap(8),
                         CustomDivider(
                           alignment: Alignment.centerRight,
                           width: cardWidth * 0.85,
                         ),
-                        const SizedBox(height: 8),
+                        const Gap(8),
                         CustomIconTextButton(
                           leftIcon: Icons.timer,
                           text: '타이머',
@@ -156,7 +157,7 @@ class SettingsScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  const Gap(24),
                 ],
               ),
             ),
@@ -178,7 +179,7 @@ class SettingsScreen extends StatelessWidget {
                     // TODO: 탈퇴하기 로직 구현
                   },
                 ),
-                const SizedBox(height: 18),
+                const Gap(18),
                 CustomButton(
                   text: '로그아웃',
                   width: buttonWidth,

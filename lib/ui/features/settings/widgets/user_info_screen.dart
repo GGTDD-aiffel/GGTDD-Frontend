@@ -8,6 +8,7 @@ import 'package:ggtdd_frontend/data/services/occupation_service.dart';
 import 'package:ggtdd_frontend/data/services/user_service.dart';
 import 'package:ggtdd_frontend/ui/core/widgets/custom_simple_app_bar.dart';
 import 'package:ggtdd_frontend/ui/core/widgets/custom_button.dart';
+import 'package:gap/gap.dart';
 
 class UserInfoScreen extends StatefulWidget {
   final String userId;
@@ -191,7 +192,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                           controller: _residenceController,
                           decoration: const InputDecoration(labelText: '거주지'),
                         ),
-                        const SizedBox(height: 10.0),
+                        const Gap(10),
                         const Text('직업'),
                         GestureDetector(
                           onTap: () => _showOccupationModal(context),
@@ -210,7 +211,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                           controller: _mbtiController,
                           decoration: const InputDecoration(labelText: 'MBTI'),
                         ),
-                        const SizedBox(height: 20),
+                        const Gap(20),
                         Center(
                           child: CustomButton(
                             text: '저장하기',

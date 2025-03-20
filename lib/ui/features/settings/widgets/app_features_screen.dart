@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ggtdd_frontend/ui/core/widgets/bottom_nav_bar.dart';
+import 'package:gap/gap.dart';
 
 class AppFeaturesScreen extends StatelessWidget {
   final String userId;
@@ -36,7 +37,7 @@ class AppFeaturesScreen extends StatelessWidget {
                 value: true,
                 onChanged: (value) {},
               ),
-              const SizedBox(height: 20),
+              const Gap(20),
               const Text(
                 '기능',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),

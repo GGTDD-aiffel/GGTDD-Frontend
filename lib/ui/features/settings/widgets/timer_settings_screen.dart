@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ggtdd_frontend/ui/core/widgets/bottom_nav_bar.dart';
+import 'package:gap/gap.dart';
 
 class TimerSettingsScreen extends StatelessWidget {
   final String userId;
@@ -26,7 +27,7 @@ class TimerSettingsScreen extends StatelessWidget {
                 trailing: const Text('25분'),
                 onTap: () {},
               ),
-              const SizedBox(height: 20),
+              const Gap(20),
               const Text(
                 '뽀모도로 1',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -41,7 +42,7 @@ class TimerSettingsScreen extends StatelessWidget {
                 trailing: const Text('5분'),
                 onTap: () {},
               ),
-              const SizedBox(height: 20),
+              const Gap(20),
               const Text(
                 '뽀모도로 2',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -56,7 +57,7 @@ class TimerSettingsScreen extends StatelessWidget {
                 trailing: const Text('10분'),
                 onTap: () {},
               ),
-              const SizedBox(height: 20),
+              const Gap(20),
               const Text(
                 '뽀모도로 3',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:ggtdd_frontend/ui/core/theme/app_colors.dart';
 
 class SettingsContainer extends StatelessWidget {
@@ -22,7 +23,7 @@ class SettingsContainer extends StatelessWidget {
           : AppColors.lightBackground,
       body: Column(
         children: [
-          const SizedBox(height: 16),
+          const Gap(16),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ggtdd_frontend/ui/core/widgets/bottom_nav_bar.dart';
+import 'package:gap/gap.dart';
 
 class CustomTagsScreen extends StatelessWidget {
   final String userId;
@@ -21,7 +22,7 @@ class CustomTagsScreen extends StatelessWidget {
                 '시간 태그',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 10),
+              const Gap(10),
               Wrap(
                 spacing: 10,
                 runSpacing: 10,
@@ -30,12 +31,12 @@ class CustomTagsScreen extends StatelessWidget {
                     Chip(label: Text(tag)),
                 ],
               ),
-              const SizedBox(height: 20),
+              const Gap(20),
               const Text(
                 '공간 태그',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 10),
+              const Gap(10),
               Wrap(
                 spacing: 10,
                 runSpacing: 10,
@@ -44,12 +45,12 @@ class CustomTagsScreen extends StatelessWidget {
                     Chip(label: Text(tag)),
                 ],
               ),
-              const SizedBox(height: 20),
+              const Gap(20),
               const Text(
                 '기타 태그',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 10),
+              const Gap(10),
               Wrap(
                 spacing: 10,
                 runSpacing: 10,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class CustomIconTextButton extends StatelessWidget {
   final IconData? leftIcon;
@@ -57,7 +58,7 @@ class CustomIconTextButton extends StatelessWidget {
                         size: leftIconSize,
                         color: leftIconColor ?? defaultTextColor,
                       ),
-                      SizedBox(width: leftIconMargin),
+                      Gap(leftIconMargin!),
                     ],
                     Expanded(
                       child: Text(

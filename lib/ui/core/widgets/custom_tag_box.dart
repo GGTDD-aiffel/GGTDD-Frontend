@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class CustomTagBox extends StatelessWidget {
   final double width;
@@ -56,7 +57,7 @@ class CustomTagBox extends StatelessWidget {
                   color: leftIconColor,
                   size: textSize,
                 ),
-              if (leftIcon != null) const SizedBox(width: 8.0),
+              if (leftIcon != null) const Gap(8),
               Expanded(
                 child: Text(
                   text,

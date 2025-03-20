@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class OnBoardingContextsScreen extends StatefulWidget {
@@ -28,7 +29,7 @@ class _OnBoardingContextsScreenState extends State<OnBoardingContextsScreen> {
                 'What’s your main context?',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 20),
+              const Gap(20),
               DropdownButtonFormField<String>(
                 value: selectedContext,
                 hint: const Text('Select your context'),
@@ -47,7 +48,7 @@ class _OnBoardingContextsScreenState extends State<OnBoardingContextsScreen> {
                   border: OutlineInputBorder(),
                 ),
               ),
-              const SizedBox(height: 30),
+              const Gap(30),
               ElevatedButton(
                 onPressed: () {
                   if (selectedContext != null) {
@@ -68,7 +69,7 @@ class _OnBoardingContextsScreenState extends State<OnBoardingContextsScreen> {
                   style: TextStyle(fontSize: 18),
                 ),
               ),
-              const SizedBox(height: 20),
+              const Gap(20),
               TextButton(
                 onPressed: () => Get.back(),
                 child: const Text('Back to Info'),

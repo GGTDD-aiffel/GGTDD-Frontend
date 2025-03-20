@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ggtdd_frontend/ui/core/widgets/bottom_nav_bar.dart';
+import 'package:gap/gap.dart';
 
 class ContextRolesScreen extends StatelessWidget {
   final String userId;
@@ -21,7 +22,7 @@ class ContextRolesScreen extends StatelessWidget {
                 '9가지 맥락',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 20),
+              const Gap(20),
               Wrap(
                 spacing: 10,
                 runSpacing: 10,

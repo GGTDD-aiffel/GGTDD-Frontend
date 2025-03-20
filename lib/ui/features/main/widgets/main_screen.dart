@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ggtdd_frontend/ui/core/widgets/bottom_nav_bar.dart';
+import 'package:gap/gap.dart';
 
 class MainScreen extends StatelessWidget {
   MainScreen({super.key});
@@ -108,10 +109,9 @@ class MainScreen extends StatelessWidget {
             onPressed: () {
               if (selectedContext != null) {
                 Navigator.pop(context);
-                // 선택된 맥락에 따라 추천 액션 찾기 (여기서는 단순히 첫 번째 일치하는 액션 선택)
                 final recommendedAction = actionSteps.firstWhere(
                   (action) => action['tags']['맥락'] == selectedContext,
-                  orElse: () => actionSteps.first, // 없으면 첫 번째 액션 추천
+                  orElse: () => actionSteps.first,
                 );
                 Get.toNamed('/actions/${recommendedAction['id']}');
               } else {
@@ -135,7 +135,7 @@ class MainScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 20),
+              const Gap(20),
               Expanded(
                 child: ListView.builder(
                   itemCount: actionSteps.length,
@@ -155,7 +155,7 @@ class MainScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            const SizedBox(height: 8),
+                            const Gap(8),
                             Wrap(
                               spacing: 8,
                               runSpacing: 4,
