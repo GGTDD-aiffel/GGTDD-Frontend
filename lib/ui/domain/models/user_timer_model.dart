@@ -21,9 +21,10 @@ class UserTimer {
     this.updatedAt,
   });
 
-  factory UserTimer.fromJson(Map<String, dynamic> json) {
+  factory UserTimer.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
     return UserTimer(
-      userTimerId: json['user_timer_id'] as String,
+      userTimerId: docId,
       userId: json['user_id'] as String,
       defaultTimerId: json['default_timer_id'] as String?,
       timerName: json['timer_name'] as String,
@@ -38,7 +39,6 @@ class UserTimer {
 
   Map<String, dynamic> toJson() {
     return {
-      'user_timer_id': userTimerId,
       'user_id': userId,
       'default_timer_id': defaultTimerId,
       'timer_name': timerName,

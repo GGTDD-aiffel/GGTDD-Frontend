@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ggtdd_frontend/data/model/api_base_model.dart';
 import 'package:ggtdd_frontend/data/model/api_pagination_model.dart';
+import 'package:ggtdd_frontend/ui/domain/models/actionable_step_model.dart';
 
 // 생성 요청 DTO
 class ActionableStepCreateRequest {
@@ -56,70 +57,37 @@ class ActionableStepUpdateRequest {
 
 // 기본 조회 응답 DTO
 class ActionableStepResponse {
-  final String actionableStepId;
-  final String contentId;
-  final int weekNumber;
-  final String stepContent;
-  final bool isCompleted;
-  final String? review;
-  final DateTime createdAt;
-  final DateTime? updatedAt;
+  final ActionableStep step;
 
-  ActionableStepResponse({
-    required this.actionableStepId,
-    required this.contentId,
-    required this.weekNumber,
-    required this.stepContent,
-    required this.isCompleted,
-    this.review,
-    required this.createdAt,
-    this.updatedAt,
-  });
+  ActionableStepResponse({required this.step});
 
-  factory ActionableStepResponse.fromJson(Map<String, dynamic> json) {
+  factory ActionableStepResponse.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
     return ActionableStepResponse(
-      actionableStepId: json['actionable_step_id'] as String,
-      contentId: json['content_id'] as String,
-      weekNumber: json['week_number'] as int,
-      stepContent: json['step_content'] as String,
-      isCompleted: json['is_completed'] as bool,
-      review: json['review'] as String?,
-      createdAt: (json['created_at'] as Timestamp).toDate(),
-      updatedAt: json['updated_at'] != null
-          ? (json['updated_at'] as Timestamp).toDate()
-          : null,
+      step: ActionableStep.fromJson(json, docId: docId),
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'actionable_step_id': actionableStepId,
-      'content_id': contentId,
-      'week_number': weekNumber,
-      'step_content': stepContent,
-      'is_completed': isCompleted,
-      'review': review,
-      'created_at': Timestamp.fromDate(createdAt),
-      'updated_at': updatedAt != null ? Timestamp.fromDate(updatedAt!) : null,
-    };
+    return step.toJson();
   }
 }
 
 // 리스트 조회 응답 DTO (페이지네이션 포함)
 class ActionableStepListResponse {
-  final List<ActionableStepResponse> data;
+  final List<ActionableStep> steps;
   final PaginationMeta meta;
 
   ActionableStepListResponse({
-    required this.data,
+    required this.steps,
     required this.meta,
   });
 
   factory ActionableStepListResponse.fromJson(Map<String, dynamic> json) {
     return ActionableStepListResponse(
-      data: (json['data'] as List<dynamic>)
-          .map(
-              (e) => ActionableStepResponse.fromJson(e as Map<String, dynamic>))
+      steps: (json['data'] as List<dynamic>)
+          .map((e) => ActionableStep.fromJson(e as Map<String, dynamic>,
+              docId: e['actionable_step_id'] ?? ''))
           .toList(),
       meta: PaginationMeta.fromJson(json['meta'] as Map<String, dynamic>),
     );
@@ -127,7 +95,7 @@ class ActionableStepListResponse {
 
   Map<String, dynamic> toJson() {
     return {
-      'data': data.map((d) => d.toJson()).toList(),
+      'data': steps.map((s) => s.toJson()).toList(),
       'meta': meta.toJson(),
     };
   }

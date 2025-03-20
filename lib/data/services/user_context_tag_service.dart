@@ -7,25 +7,26 @@ class UserContextTagService {
   UserContextTagService({required UserContextTagRepository repository})
       : _repository = repository;
 
-  Future<UserContextTagResponse> createUserContextTag(
+  Future<UserContextTagCreateResponse> createUserContextTag(
       UserContextTagCreateRequest request) async {
     return await _repository.createUserContextTag(request);
   }
 
-  Future<UserContextTagResponse?> getUserContextTag(String tagId) async {
+  Future<UserContextTagGetResponse> getUserContextTag(String tagId) async {
     return await _repository.fetchUserContextTag(tagId);
   }
 
-  Future<UserContextTagListResponse> getUserContextTags() async {
+  Future<UserContextTagListResponseDto> getUserContextTags() async {
     return await _repository.fetchUserContextTags();
   }
 
-  Future<UserContextTagResponse> updateUserContextTag(
+  Future<UserContextTagUpdateResponse> updateUserContextTag(
       String tagId, UserContextTagUpdateRequest request) async {
     return await _repository.updateUserContextTag(tagId, request);
   }
 
-  Future<void> deleteUserContextTag(String tagId) async {
-    await _repository.deleteUserContextTag(tagId);
+  Future<UserContextTagDeleteResponse> deleteUserContextTag(
+      String tagId) async {
+    return await _repository.deleteUserContextTag(tagId);
   }
 }

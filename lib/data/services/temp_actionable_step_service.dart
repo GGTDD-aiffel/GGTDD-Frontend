@@ -7,26 +7,27 @@ class TempActionableStepService {
   TempActionableStepService({required TempActionableStepRepository repository})
       : _repository = repository;
 
-  Future<TempActionableStepResponse> createTempActionableStep(
+  Future<TempActionableStepCreateResponse> createTempActionableStep(
       TempActionableStepCreateRequest request) async {
     return await _repository.createTempActionableStep(request);
   }
 
-  Future<TempActionableStepResponse?> getTempActionableStep(
+  Future<TempActionableStepGetResponse> getTempActionableStep(
       String stepId) async {
     return await _repository.fetchTempActionableStep(stepId);
   }
 
-  Future<TempActionableStepListResponse> getTempActionableSteps() async {
+  Future<TempActionableStepListResponseDto> getTempActionableSteps() async {
     return await _repository.fetchTempActionableSteps();
   }
 
-  Future<TempActionableStepResponse> updateTempActionableStep(
+  Future<TempActionableStepUpdateResponse> updateTempActionableStep(
       String stepId, TempActionableStepUpdateRequest request) async {
     return await _repository.updateTempActionableStep(stepId, request);
   }
 
-  Future<void> deleteTempActionableStep(String stepId) async {
-    await _repository.deleteTempActionableStep(stepId);
+  Future<TempActionableStepDeleteResponse> deleteTempActionableStep(
+      String stepId) async {
+    return await _repository.deleteTempActionableStep(stepId);
   }
 }

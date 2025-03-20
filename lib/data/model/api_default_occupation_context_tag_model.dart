@@ -50,46 +50,45 @@ class DefaultOccupationContextTagUpdateRequest {
   }
 }
 
-// 원본 데이터 조회 응답 DTO (컬렉션 필드 그대로)
+// 기본 조회 응답 DTO
 class DefaultOccupationContextTagResponse {
-  final String defaultOccupationTagId;
-  final String occupationId;
-  final String defaultContextId;
-  final String defaultTagId;
-  final DateTime createdAt;
-  final DateTime? updatedAt;
+  final DefaultOccupationContextTag tag;
 
-  DefaultOccupationContextTagResponse({
-    required this.defaultOccupationTagId,
-    required this.occupationId,
-    required this.defaultContextId,
-    required this.defaultTagId,
-    required this.createdAt,
-    this.updatedAt,
-  });
+  DefaultOccupationContextTagResponse({required this.tag});
 
   factory DefaultOccupationContextTagResponse.fromJson(
-      Map<String, dynamic> json) {
+      Map<String, dynamic> json,
+      {required String docId}) {
     return DefaultOccupationContextTagResponse(
-      defaultOccupationTagId: json['default_occupation_tag_id'] as String,
-      occupationId: json['occupation_id'] as String,
-      defaultContextId: json['default_context_id'] as String,
-      defaultTagId: json['default_tag_id'] as String,
-      createdAt: (json['created_at'] as Timestamp).toDate(),
-      updatedAt: json['updated_at'] != null
-          ? (json['updated_at'] as Timestamp).toDate()
-          : null,
+      tag: DefaultOccupationContextTag.fromJson(json, docId: docId),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return tag.toJson();
+  }
+}
+
+// 리스트 조회 응답 DTO (원본)
+class DefaultOccupationContextTagListResponse {
+  final List<DefaultOccupationContextTag> tags;
+
+  DefaultOccupationContextTagListResponse({required this.tags});
+
+  factory DefaultOccupationContextTagListResponse.fromJson(
+      Map<String, dynamic> json) {
+    return DefaultOccupationContextTagListResponse(
+      tags: (json['data'] as List<dynamic>)
+          .map((e) => DefaultOccupationContextTag.fromJson(
+              e as Map<String, dynamic>,
+              docId: e['default_occupation_tag_id'] ?? ''))
+          .toList(),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'default_occupation_tag_id': defaultOccupationTagId,
-      'occupation_id': occupationId,
-      'default_context_id': defaultContextId,
-      'default_tag_id': defaultTagId,
-      'created_at': Timestamp.fromDate(createdAt),
-      'updated_at': updatedAt != null ? Timestamp.fromDate(updatedAt!) : null,
+      'data': tags.map((t) => t.toJson()).toList(),
     };
   }
 }
@@ -124,7 +123,8 @@ class OccupationContextTagUiResponse {
       contextId: json['context_id'] as String,
       contextName: json['context_name'] as String,
       tags: (json['tags'] as List<dynamic>)
-          .map((e) => DefaultTag.fromJson(e as Map<String, dynamic>))
+          .map((e) => DefaultTag.fromJson(e as Map<String, dynamic>,
+              docId: e['default_tag_id'] ?? ''))
           .toList(),
       createdAt: (json['created_at'] as Timestamp).toDate(),
       updatedAt: json['updated_at'] != null
@@ -147,39 +147,16 @@ class OccupationContextTagUiResponse {
   }
 }
 
-// 리스트 조회 응답 DTO (원본)
-class DefaultOccupationContextTagListResponse {
-  final List<DefaultOccupationContextTagResponse> data;
-
-  DefaultOccupationContextTagListResponse({required this.data});
-
-  factory DefaultOccupationContextTagListResponse.fromJson(
-      Map<String, dynamic> json) {
-    return DefaultOccupationContextTagListResponse(
-      data: (json['data'] as List<dynamic>)
-          .map((e) => DefaultOccupationContextTagResponse.fromJson(
-              e as Map<String, dynamic>))
-          .toList(),
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'data': data.map((d) => d.toJson()).toList(),
-    };
-  }
-}
-
 // 리스트 조회 응답 DTO (UI 맞춤)
 class OccupationContextTagUiListResponse {
-  final List<OccupationContextTagUiResponse> data;
+  final List<OccupationContextTagUiResponse> tags;
 
-  OccupationContextTagUiListResponse({required this.data});
+  OccupationContextTagUiListResponse({required this.tags});
 
   factory OccupationContextTagUiListResponse.fromJson(
       Map<String, dynamic> json) {
     return OccupationContextTagUiListResponse(
-      data: (json['data'] as List<dynamic>)
+      tags: (json['data'] as List<dynamic>)
           .map((e) => OccupationContextTagUiResponse.fromJson(
               e as Map<String, dynamic>))
           .toList(),
@@ -188,20 +165,20 @@ class OccupationContextTagUiListResponse {
 
   Map<String, dynamic> toJson() {
     return {
-      'data': data.map((d) => d.toJson()).toList(),
+      'data': tags.map((t) => t.toJson()).toList(),
     };
   }
 }
 
 // BaseResponse 적용
 typedef DefaultOccupationContextTagCreateResponse
-    = BaseResponse<DefaultOccupationContextTag>;
+    = BaseResponse<DefaultOccupationContextTagResponse>;
 typedef DefaultOccupationContextTagListResponseDto
     = BaseResponse<DefaultOccupationContextTagListResponse>;
 typedef DefaultOccupationContextTagGetResponse
     = BaseResponse<DefaultOccupationContextTagResponse>;
 typedef DefaultOccupationContextTagUpdateResponse
-    = BaseResponse<DefaultOccupationContextTag>;
+    = BaseResponse<DefaultOccupationContextTagResponse>;
 typedef DefaultOccupationContextTagDeleteResponse = BaseResponse<void>;
 typedef OccupationContextTagUiListResponseDto
     = BaseResponse<OccupationContextTagUiListResponse>;

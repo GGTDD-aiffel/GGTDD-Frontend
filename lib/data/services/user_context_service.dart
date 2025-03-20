@@ -7,25 +7,25 @@ class UserContextService {
   UserContextService({required UserContextRepository repository})
       : _repository = repository;
 
-  Future<UserContextResponse> createUserContext(
+  Future<UserContextCreateResponse> createUserContext(
       UserContextCreateRequest request) async {
     return await _repository.createUserContext(request);
   }
 
-  Future<UserContextResponse?> getUserContext(String contextId) async {
+  Future<UserContextGetResponse> getUserContext(String contextId) async {
     return await _repository.fetchUserContext(contextId);
   }
 
-  Future<UserContextListResponse> getUserContexts() async {
+  Future<UserContextListResponseDto> getUserContexts() async {
     return await _repository.fetchUserContexts();
   }
 
-  Future<UserContextResponse> updateUserContext(
+  Future<UserContextUpdateResponse> updateUserContext(
       String contextId, UserContextUpdateRequest request) async {
     return await _repository.updateUserContext(contextId, request);
   }
 
-  Future<void> deleteUserContext(String contextId) async {
-    await _repository.deleteUserContext(contextId);
+  Future<UserContextDeleteResponse> deleteUserContext(String contextId) async {
+    return await _repository.deleteUserContext(contextId);
   }
 }

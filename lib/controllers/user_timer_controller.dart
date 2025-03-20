@@ -20,7 +20,12 @@ class UserTimerController extends ChangeNotifier {
     notifyListeners();
     try {
       final response = await _service.getUserTimers();
-      _timers = response.timers;
+      if (response.code == 200 && response.data != null) {
+        _timers = response.data!.timers;
+        print('유저 타이머 리스트 조회 성공: ${response.message}');
+      } else {
+        print('유저 타이머 리스트 조회 실패: ${response.message} (code: ${response.code})');
+      }
     } catch (e) {
       print('유저 타이머 리스트 조회 오류: $e');
     } finally {
@@ -33,7 +38,13 @@ class UserTimerController extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      _timer = await _service.getUserTimer(timerId);
+      final response = await _service.getUserTimer(timerId);
+      if (response.code == 200 && response.data != null) {
+        _timer = response.data!.timer;
+        print('유저 타이머 조회 성공: ${response.message}');
+      } else {
+        print('유저 타이머 조회 실패: ${response.message} (code: ${response.code})');
+      }
     } catch (e) {
       print('유저 타이머 조회 오류: $e');
     } finally {
@@ -47,7 +58,13 @@ class UserTimerController extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      _timer = await _service.updateUserTimer(timerId, request);
+      final response = await _service.updateUserTimer(timerId, request);
+      if (response.code == 200 && response.data != null) {
+        _timer = response.data;
+        print('유저 타이머 수정 성공: ${response.message}');
+      } else {
+        print('유저 타이머 수정 실패: ${response.message} (code: ${response.code})');
+      }
     } catch (e) {
       print('유저 타이머 수정 오류: $e');
     } finally {

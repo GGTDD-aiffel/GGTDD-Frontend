@@ -25,9 +25,9 @@ class Subtask {
     this.updatedAt,
   });
 
-  factory Subtask.fromJson(Map<String, dynamic> json) {
+  factory Subtask.fromJson(Map<String, dynamic> json, {required String docId}) {
     return Subtask(
-      subtaskId: json['subtask_id'] as String,
+      subtaskId: docId,
       actionableStepId: json['actionable_step_id'] as String?,
       tempActionableStepId: json['temp_actionable_step_id'] as String?,
       subtaskContent: json['subtask_content'] as String,
@@ -44,7 +44,6 @@ class Subtask {
 
   Map<String, dynamic> toJson() {
     return {
-      'subtask_id': subtaskId,
       'actionable_step_id': actionableStepId,
       'temp_actionable_step_id': tempActionableStepId,
       'subtask_content': subtaskContent,

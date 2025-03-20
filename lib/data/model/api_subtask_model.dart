@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ggtdd_frontend/data/model/api_base_model.dart';
+import 'package:ggtdd_frontend/ui/domain/models/sub_task_model.dart';
 
 // 생성 요청 DTO
 class SubtaskCreateRequest {
@@ -64,80 +65,40 @@ class SubtaskUpdateRequest {
 
 // 기본 조회 응답 DTO
 class SubtaskResponse {
-  final String subtaskId;
-  final String? actionableStepId;
-  final String? tempActionableStepId;
-  final String subtaskContent;
-  final bool isCompleted;
-  final int priority;
-  final String subtaskContext;
-  final String subtaskTag;
-  final DateTime createdAt;
-  final DateTime? updatedAt;
+  final Subtask subtask;
 
-  SubtaskResponse({
-    required this.subtaskId,
-    this.actionableStepId,
-    this.tempActionableStepId,
-    required this.subtaskContent,
-    required this.isCompleted,
-    required this.priority,
-    required this.subtaskContext,
-    required this.subtaskTag,
-    required this.createdAt,
-    this.updatedAt,
-  });
+  SubtaskResponse({required this.subtask});
 
-  factory SubtaskResponse.fromJson(Map<String, dynamic> json) {
+  factory SubtaskResponse.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
     return SubtaskResponse(
-      subtaskId: json['subtask_id'] as String,
-      actionableStepId: json['actionable_step_id'] as String?,
-      tempActionableStepId: json['temp_actionable_step_id'] as String?,
-      subtaskContent: json['subtask_content'] as String,
-      isCompleted: json['is_completed'] as bool,
-      priority: json['priority'] as int,
-      subtaskContext: json['subtask_context'] as String,
-      subtaskTag: json['subtask_tag'] as String,
-      createdAt: (json['created_at'] as Timestamp).toDate(),
-      updatedAt: json['updated_at'] != null
-          ? (json['updated_at'] as Timestamp).toDate()
-          : null,
+      subtask: Subtask.fromJson(json, docId: docId),
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'subtask_id': subtaskId,
-      'actionable_step_id': actionableStepId,
-      'temp_actionable_step_id': tempActionableStepId,
-      'subtask_content': subtaskContent,
-      'is_completed': isCompleted,
-      'priority': priority,
-      'subtask_context': subtaskContext,
-      'subtask_tag': subtaskTag,
-      'created_at': Timestamp.fromDate(createdAt),
-      'updated_at': updatedAt != null ? Timestamp.fromDate(updatedAt!) : null,
-    };
+    return subtask.toJson();
   }
 }
 
 // 리스트 조회 응답 DTO
 class SubtaskListResponse {
-  final List<SubtaskResponse> data;
+  final List<Subtask> subtasks;
 
-  SubtaskListResponse({required this.data});
+  SubtaskListResponse({required this.subtasks});
 
   factory SubtaskListResponse.fromJson(Map<String, dynamic> json) {
     return SubtaskListResponse(
-      data: (json['data'] as List<dynamic>)
-          .map((e) => SubtaskResponse.fromJson(e as Map<String, dynamic>))
+      subtasks: (json['data'] as List<dynamic>)
+          .map((e) => Subtask.fromJson(e as Map<String, dynamic>,
+              docId: e['subtask_id'] ?? ''))
           .toList(),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'data': data.map((d) => d.toJson()).toList(),
+      'data': subtasks.map((s) => s.toJson()).toList(),
     };
   }
 }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ggtdd_frontend/data/model/api_base_model.dart';
+import 'package:ggtdd_frontend/ui/domain/models/recognition_model.dart';
 
 // 생성 요청 DTO
 class RecognitionCreateRequest {
@@ -31,54 +32,40 @@ class RecognitionUpdateRequest {
 
 // 기본 조회 응답 DTO
 class RecognitionResponse {
-  final String recognitionId;
-  final String contentId;
-  final DateTime createdAt;
-  final bool isProcessed;
+  final Recognition recognition;
 
-  RecognitionResponse({
-    required this.recognitionId,
-    required this.contentId,
-    required this.createdAt,
-    required this.isProcessed,
-  });
+  RecognitionResponse({required this.recognition});
 
-  factory RecognitionResponse.fromJson(Map<String, dynamic> json) {
+  factory RecognitionResponse.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
     return RecognitionResponse(
-      recognitionId: json['recognition_id'] as String,
-      contentId: json['content_id'] as String,
-      createdAt: (json['created_at'] as Timestamp).toDate(),
-      isProcessed: json['is_processed'] as bool,
+      recognition: Recognition.fromJson(json, docId: docId),
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'recognition_id': recognitionId,
-      'content_id': contentId,
-      'created_at': Timestamp.fromDate(createdAt),
-      'is_processed': isProcessed,
-    };
+    return recognition.toJson();
   }
 }
 
 // 리스트 조회 응답 DTO
 class RecognitionListResponse {
-  final List<RecognitionResponse> data;
+  final List<Recognition> recognitions;
 
-  RecognitionListResponse({required this.data});
+  RecognitionListResponse({required this.recognitions});
 
   factory RecognitionListResponse.fromJson(Map<String, dynamic> json) {
     return RecognitionListResponse(
-      data: (json['data'] as List<dynamic>)
-          .map((e) => RecognitionResponse.fromJson(e as Map<String, dynamic>))
+      recognitions: (json['data'] as List<dynamic>)
+          .map((e) => Recognition.fromJson(e as Map<String, dynamic>,
+              docId: e['recognition_id'] ?? ''))
           .toList(),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'data': data.map((d) => d.toJson()).toList(),
+      'data': recognitions.map((r) => r.toJson()).toList(),
     };
   }
 }

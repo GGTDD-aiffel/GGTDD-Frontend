@@ -11,9 +11,10 @@ class DefaultTimer {
     this.breakTime,
   });
 
-  factory DefaultTimer.fromJson(Map<String, dynamic> json) {
+  factory DefaultTimer.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
     return DefaultTimer(
-      defaultTimerId: json['default_timer_id'] as String,
+      defaultTimerId: docId,
       timerName: json['timer_name'] as String,
       focusTime: json['focus_time'] as int,
       breakTime: json['break_time'] as int?,
@@ -22,7 +23,6 @@ class DefaultTimer {
 
   Map<String, dynamic> toJson() {
     return {
-      'default_timer_id': defaultTimerId,
       'timer_name': timerName,
       'focus_time': focusTime,
       'break_time': breakTime,

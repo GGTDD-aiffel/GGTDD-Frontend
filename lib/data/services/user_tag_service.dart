@@ -7,24 +7,25 @@ class UserTagService {
   UserTagService({required UserTagRepository repository})
       : _repository = repository;
 
-  Future<UserTagResponse> createUserTag(UserTagCreateRequest request) async {
+  Future<UserTagCreateResponse> createUserTag(
+      UserTagCreateRequest request) async {
     return await _repository.createUserTag(request);
   }
 
-  Future<UserTagResponse?> getUserTag(String tagId) async {
+  Future<UserTagGetResponse> getUserTag(String tagId) async {
     return await _repository.fetchUserTag(tagId);
   }
 
-  Future<UserTagListResponse> getUserTags() async {
+  Future<UserTagListResponseDto> getUserTags() async {
     return await _repository.fetchUserTags();
   }
 
-  Future<UserTagResponse> updateUserTag(
+  Future<UserTagUpdateResponse> updateUserTag(
       String tagId, UserTagUpdateRequest request) async {
     return await _repository.updateUserTag(tagId, request);
   }
 
-  Future<void> deleteUserTag(String tagId) async {
-    await _repository.deleteUserTag(tagId);
+  Future<UserTagDeleteResponse> deleteUserTag(String tagId) async {
+    return await _repository.deleteUserTag(tagId);
   }
 }

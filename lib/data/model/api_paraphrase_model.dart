@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ggtdd_frontend/data/model/api_base_model.dart';
+import 'package:ggtdd_frontend/ui/domain/models/paraphrase_model.dart';
 
 // 생성 요청 DTO
 class ParaphraseCreateRequest {
@@ -43,58 +44,40 @@ class ParaphraseUpdateRequest {
 
 // 기본 조회 응답 DTO
 class ParaphraseResponse {
-  final String paraphraseId;
-  final String recognitionId;
-  final String paraphraseContent;
-  final bool isSelectedParaphrase;
-  final DateTime createdAt;
+  final Paraphrase paraphrase;
 
-  ParaphraseResponse({
-    required this.paraphraseId,
-    required this.recognitionId,
-    required this.paraphraseContent,
-    required this.isSelectedParaphrase,
-    required this.createdAt,
-  });
+  ParaphraseResponse({required this.paraphrase});
 
-  factory ParaphraseResponse.fromJson(Map<String, dynamic> json) {
+  factory ParaphraseResponse.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
     return ParaphraseResponse(
-      paraphraseId: json['paraphrase_id'] as String,
-      recognitionId: json['recognition_id'] as String,
-      paraphraseContent: json['paraphrase_content'] as String,
-      isSelectedParaphrase: json['is_selected_paraphrase'] as bool,
-      createdAt: (json['created_at'] as Timestamp).toDate(),
+      paraphrase: Paraphrase.fromJson(json, docId: docId),
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'paraphrase_id': paraphraseId,
-      'recognition_id': recognitionId,
-      'paraphrase_content': paraphraseContent,
-      'is_selected_paraphrase': isSelectedParaphrase,
-      'created_at': Timestamp.fromDate(createdAt),
-    };
+    return paraphrase.toJson();
   }
 }
 
 // 리스트 조회 응답 DTO
 class ParaphraseListResponse {
-  final List<ParaphraseResponse> data;
+  final List<Paraphrase> paraphrases;
 
-  ParaphraseListResponse({required this.data});
+  ParaphraseListResponse({required this.paraphrases});
 
   factory ParaphraseListResponse.fromJson(Map<String, dynamic> json) {
     return ParaphraseListResponse(
-      data: (json['data'] as List<dynamic>)
-          .map((e) => ParaphraseResponse.fromJson(e as Map<String, dynamic>))
+      paraphrases: (json['data'] as List<dynamic>)
+          .map((e) => Paraphrase.fromJson(e as Map<String, dynamic>,
+              docId: e['paraphrase_id'] ?? ''))
           .toList(),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'data': data.map((d) => d.toJson()).toList(),
+      'data': paraphrases.map((p) => p.toJson()).toList(),
     };
   }
 }

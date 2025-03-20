@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ggtdd_frontend/data/model/api_base_model.dart';
+import 'package:ggtdd_frontend/ui/domain/models/temp_actionable_step_model.dart';
 
 // 생성 요청 DTO
 class TempActionableStepCreateRequest {
@@ -43,59 +44,40 @@ class TempActionableStepUpdateRequest {
 
 // 기본 조회 응답 DTO
 class TempActionableStepResponse {
-  final String tempActionableStepId;
-  final String recognitionId;
-  final int weekNumber;
-  final String stepContent;
-  final DateTime createdAt;
+  final TempActionableStep step;
 
-  TempActionableStepResponse({
-    required this.tempActionableStepId,
-    required this.recognitionId,
-    required this.weekNumber,
-    required this.stepContent,
-    required this.createdAt,
-  });
+  TempActionableStepResponse({required this.step});
 
-  factory TempActionableStepResponse.fromJson(Map<String, dynamic> json) {
+  factory TempActionableStepResponse.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
     return TempActionableStepResponse(
-      tempActionableStepId: json['temp_actionable_step_id'] as String,
-      recognitionId: json['recognition_id'] as String,
-      weekNumber: json['week_number'] as int,
-      stepContent: json['step_content'] as String,
-      createdAt: (json['created_at'] as Timestamp).toDate(),
+      step: TempActionableStep.fromJson(json, docId: docId),
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'temp_actionable_step_id': tempActionableStepId,
-      'recognition_id': recognitionId,
-      'week_number': weekNumber,
-      'step_content': stepContent,
-      'created_at': Timestamp.fromDate(createdAt),
-    };
+    return step.toJson();
   }
 }
 
 // 리스트 조회 응답 DTO
 class TempActionableStepListResponse {
-  final List<TempActionableStepResponse> data;
+  final List<TempActionableStep> steps;
 
-  TempActionableStepListResponse({required this.data});
+  TempActionableStepListResponse({required this.steps});
 
   factory TempActionableStepListResponse.fromJson(Map<String, dynamic> json) {
     return TempActionableStepListResponse(
-      data: (json['data'] as List<dynamic>)
-          .map((e) =>
-              TempActionableStepResponse.fromJson(e as Map<String, dynamic>))
+      steps: (json['data'] as List<dynamic>)
+          .map((e) => TempActionableStep.fromJson(e as Map<String, dynamic>,
+              docId: e['temp_actionable_step_id'] ?? ''))
           .toList(),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'data': data.map((d) => d.toJson()).toList(),
+      'data': steps.map((s) => s.toJson()).toList(),
     };
   }
 }

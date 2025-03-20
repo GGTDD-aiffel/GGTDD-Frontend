@@ -2,7 +2,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ggtdd_frontend/data/model/api_base_model.dart';
 import 'package:ggtdd_frontend/ui/domain/models/default_timer_model.dart';
 
-// 기본 타이머 생성 요청 DTO (관리자용)
+// 기본 타이머 단일 조회 응답 DTO (추가)
+class DefaultTimerResponse {
+  final DefaultTimer timer;
+
+  DefaultTimerResponse({required this.timer});
+
+  factory DefaultTimerResponse.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
+    return DefaultTimerResponse(
+      timer: DefaultTimer.fromJson(json, docId: docId),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return timer.toJson();
+  }
+}
+
+// 기본 타이머 생성 요청 DTO
 class DefaultTimerCreateRequest {
   final String timerName;
   final int focusTime;
@@ -24,7 +42,7 @@ class DefaultTimerCreateRequest {
   }
 }
 
-// 기본 타이머 수정 요청 DTO (관리자용)
+// 기본 타이머 수정 요청 DTO
 class DefaultTimerUpdateRequest {
   final String? timerName;
   final int? focusTime;
@@ -54,7 +72,8 @@ class DefaultTimerListResponse {
   factory DefaultTimerListResponse.fromJson(Map<String, dynamic> json) {
     return DefaultTimerListResponse(
       timers: (json['timers'] as List<dynamic>)
-          .map((e) => DefaultTimer.fromJson(e as Map<String, dynamic>))
+          .map((e) => DefaultTimer.fromJson(e as Map<String, dynamic>,
+              docId: e['default_timer_id'] ?? ''))
           .toList(),
     );
   }
@@ -67,6 +86,7 @@ class DefaultTimerListResponse {
 }
 
 // BaseResponse 적용
+typedef DefaultTimerResponseDto = BaseResponse<DefaultTimerResponse>;
 typedef DefaultTimerCreateResponse = BaseResponse<DefaultTimer>;
 typedef DefaultTimerUpdateResponse = BaseResponse<DefaultTimer>;
 typedef DefaultTimerDeleteResponse = BaseResponse<void>;

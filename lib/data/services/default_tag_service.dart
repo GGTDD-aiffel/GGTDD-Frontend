@@ -7,25 +7,25 @@ class DefaultTagService {
   DefaultTagService({required DefaultTagRepository repository})
       : _repository = repository;
 
-  Future<DefaultTagResponse> createDefaultTag(
+  Future<DefaultTagCreateResponse> createDefaultTag(
       DefaultTagCreateRequest request) async {
     return await _repository.createDefaultTag(request);
   }
 
-  Future<DefaultTagResponse?> getDefaultTag(String tagId) async {
+  Future<DefaultTagGetResponse> getDefaultTag(String tagId) async {
     return await _repository.fetchDefaultTag(tagId);
   }
 
-  Future<DefaultTagListResponse> getDefaultTags() async {
+  Future<DefaultTagListResponseDto> getDefaultTags() async {
     return await _repository.fetchDefaultTags();
   }
 
-  Future<DefaultTagResponse> updateDefaultTag(
+  Future<DefaultTagUpdateResponse> updateDefaultTag(
       String tagId, DefaultTagUpdateRequest request) async {
     return await _repository.updateDefaultTag(tagId, request);
   }
 
-  Future<void> deleteDefaultTag(String tagId) async {
-    await _repository.deleteDefaultTag(tagId);
+  Future<DefaultTagDeleteResponse> deleteDefaultTag(String tagId) async {
+    return await _repository.deleteDefaultTag(tagId);
   }
 }

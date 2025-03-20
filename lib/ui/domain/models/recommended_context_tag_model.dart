@@ -15,9 +15,10 @@ class RecommendedContextTag {
     required this.createdAt,
   });
 
-  factory RecommendedContextTag.fromJson(Map<String, dynamic> json) {
+  factory RecommendedContextTag.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
     return RecommendedContextTag(
-      recommendationId: json['recommendation_id'] as String,
+      recommendationId: docId,
       recognitionId: json['recognition_id'] as String,
       userContextId: json['user_context_id'] as String?,
       userTagId: json['user_tag_id'] as String?,
@@ -27,7 +28,6 @@ class RecommendedContextTag {
 
   Map<String, dynamic> toJson() {
     return {
-      'recommendation_id': recommendationId,
       'recognition_id': recognitionId,
       'user_context_id': userContextId,
       'user_tag_id': userTagId,

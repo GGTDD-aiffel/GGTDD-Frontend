@@ -7,26 +7,27 @@ class ActionableStepService {
   ActionableStepService({required ActionableStepRepository repository})
       : _repository = repository;
 
-  Future<ActionableStepResponse> createActionableStep(
+  Future<ActionableStepCreateResponse> createActionableStep(
       ActionableStepCreateRequest request) async {
     return await _repository.createActionableStep(request);
   }
 
-  Future<ActionableStepResponse?> getActionableStep(String stepId) async {
+  Future<ActionableStepGetResponse> getActionableStep(String stepId) async {
     return await _repository.fetchActionableStep(stepId);
   }
 
-  Future<ActionableStepListResponse> getActionableSteps(
+  Future<ActionableStepListResponseDto> getActionableSteps(
       {int page = 1, int limit = 10}) async {
     return await _repository.fetchActionableSteps(page: page, limit: limit);
   }
 
-  Future<ActionableStepResponse> updateActionableStep(
+  Future<ActionableStepUpdateResponse> updateActionableStep(
       String stepId, ActionableStepUpdateRequest request) async {
     return await _repository.updateActionableStep(stepId, request);
   }
 
-  Future<void> deleteActionableStep(String stepId) async {
-    await _repository.deleteActionableStep(stepId);
+  Future<ActionableStepDeleteResponse> deleteActionableStep(
+      String stepId) async {
+    return await _repository.deleteActionableStep(stepId);
   }
 }

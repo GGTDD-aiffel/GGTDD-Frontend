@@ -13,9 +13,10 @@ class DefaultContext {
     this.updatedAt,
   });
 
-  factory DefaultContext.fromJson(Map<String, dynamic> json) {
+  factory DefaultContext.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
     return DefaultContext(
-      defaultContextId: json['default_context_id'] as String,
+      defaultContextId: docId,
       contextName: json['context_name'] as String,
       createdAt: (json['created_at'] as Timestamp).toDate(),
       updatedAt: json['updated_at'] != null
@@ -26,7 +27,6 @@ class DefaultContext {
 
   Map<String, dynamic> toJson() {
     return {
-      'default_context_id': defaultContextId,
       'context_name': contextName,
       'created_at': Timestamp.fromDate(createdAt),
       'updated_at': updatedAt != null ? Timestamp.fromDate(updatedAt!) : null,

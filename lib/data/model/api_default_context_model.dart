@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ggtdd_frontend/data/model/api_base_model.dart';
+import 'package:ggtdd_frontend/ui/domain/models/default_context_model.dart';
 
 // 생성 요청 DTO
 class DefaultContextCreateRequest {
@@ -36,57 +37,40 @@ class DefaultContextUpdateRequest {
 
 // 기본 조회 응답 DTO
 class DefaultContextResponse {
-  final String defaultContextId;
-  final String contextName;
-  final DateTime createdAt;
-  final DateTime? updatedAt;
+  final DefaultContext context;
 
-  DefaultContextResponse({
-    required this.defaultContextId,
-    required this.contextName,
-    required this.createdAt,
-    this.updatedAt,
-  });
+  DefaultContextResponse({required this.context});
 
-  factory DefaultContextResponse.fromJson(Map<String, dynamic> json) {
+  factory DefaultContextResponse.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
     return DefaultContextResponse(
-      defaultContextId: json['default_context_id'] as String,
-      contextName: json['context_name'] as String,
-      createdAt: (json['created_at'] as Timestamp).toDate(),
-      updatedAt: json['updated_at'] != null
-          ? (json['updated_at'] as Timestamp).toDate()
-          : null,
+      context: DefaultContext.fromJson(json, docId: docId),
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'default_context_id': defaultContextId,
-      'context_name': contextName,
-      'created_at': Timestamp.fromDate(createdAt),
-      'updated_at': updatedAt != null ? Timestamp.fromDate(updatedAt!) : null,
-    };
+    return context.toJson();
   }
 }
 
 // 리스트 조회 응답 DTO
 class DefaultContextListResponse {
-  final List<DefaultContextResponse> data;
+  final List<DefaultContext> contexts;
 
-  DefaultContextListResponse({required this.data});
+  DefaultContextListResponse({required this.contexts});
 
   factory DefaultContextListResponse.fromJson(Map<String, dynamic> json) {
     return DefaultContextListResponse(
-      data: (json['data'] as List<dynamic>)
-          .map(
-              (e) => DefaultContextResponse.fromJson(e as Map<String, dynamic>))
+      contexts: (json['data'] as List<dynamic>)
+          .map((e) => DefaultContext.fromJson(e as Map<String, dynamic>,
+              docId: e['default_context_id'] ?? ''))
           .toList(),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'data': data.map((d) => d.toJson()).toList(),
+      'data': contexts.map((c) => c.toJson()).toList(),
     };
   }
 }

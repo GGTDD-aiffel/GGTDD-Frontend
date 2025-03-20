@@ -2,10 +2,28 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ggtdd_frontend/data/model/api_base_model.dart';
 import 'package:ggtdd_frontend/ui/domain/models/user_timer_model.dart';
 
+// 유저 타이머 단일 조회 응답 DTO (추가)
+class UserTimerResponse {
+  final UserTimer timer;
+
+  UserTimerResponse({required this.timer});
+
+  factory UserTimerResponse.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
+    return UserTimerResponse(
+      timer: UserTimer.fromJson(json, docId: docId),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return timer.toJson();
+  }
+}
+
 // 유저 타이머 생성 요청 DTO
 class UserTimerCreateRequest {
   final String userId;
-  final String? defaultTimerId; // 초기 생성 시 사용, 이후 null 가능
+  final String? defaultTimerId;
   final String timerName;
   final int? focusTime;
   final int? breakTime;
@@ -61,7 +79,8 @@ class UserTimerListResponse {
   factory UserTimerListResponse.fromJson(Map<String, dynamic> json) {
     return UserTimerListResponse(
       timers: (json['timers'] as List<dynamic>)
-          .map((e) => UserTimer.fromJson(e as Map<String, dynamic>))
+          .map((e) => UserTimer.fromJson(e as Map<String, dynamic>,
+              docId: e['user_timer_id'] ?? ''))
           .toList(),
     );
   }
@@ -74,6 +93,7 @@ class UserTimerListResponse {
 }
 
 // BaseResponse 적용
+typedef UserTimerResponseDto = BaseResponse<UserTimerResponse>;
 typedef UserTimerCreateResponse = BaseResponse<UserTimer>;
 typedef UserTimerUpdateResponse = BaseResponse<UserTimer>;
 typedef UserTimerDeleteResponse = BaseResponse<void>;

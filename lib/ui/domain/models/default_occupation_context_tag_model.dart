@@ -17,9 +17,10 @@ class DefaultOccupationContextTag {
     this.updatedAt,
   });
 
-  factory DefaultOccupationContextTag.fromJson(Map<String, dynamic> json) {
+  factory DefaultOccupationContextTag.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
     return DefaultOccupationContextTag(
-      defaultOccupationTagId: json['default_occupation_tag_id'] as String,
+      defaultOccupationTagId: docId,
       occupationId: json['occupation_id'] as String,
       defaultContextId: json['default_context_id'] as String,
       defaultTagId: json['default_tag_id'] as String,
@@ -32,7 +33,6 @@ class DefaultOccupationContextTag {
 
   Map<String, dynamic> toJson() {
     return {
-      'default_occupation_tag_id': defaultOccupationTagId,
       'occupation_id': occupationId,
       'default_context_id': defaultContextId,
       'default_tag_id': defaultTagId,

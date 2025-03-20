@@ -4,75 +4,130 @@ import 'package:ggtdd_frontend/ui/domain/models/user_timer_model.dart';
 import 'package:ggtdd_frontend/utils/firebase_utils.dart';
 
 class UserTimerRepository {
-  // 유저 타이머 생성
-  Future<UserTimer> createUserTimer(UserTimerCreateRequest request) async {
+  Future<UserTimerCreateResponse> createUserTimer(
+      UserTimerCreateRequest request) async {
     try {
       final timerId =
           FirebaseFirestore.instance.collection('user_timers').doc().id;
-      final timerData = request.toJson()..['user_timer_id'] = timerId;
+      final timerData = request.toJson();
       await FirebaseUtils.writeDocument('user_timers', timerId, timerData);
       final data = await FirebaseUtils.fetchDocument('user_timers', timerId);
       if (data != null) {
-        return UserTimer.fromJson(data);
+        return UserTimerCreateResponse(
+          code: 200,
+          status: 'success',
+          message: '유저 타이머 생성 성공',
+          data: UserTimer.fromJson(data, docId: timerId),
+        );
       }
       throw Exception('생성된 유저 타이머를 조회하지 못했습니다.');
     } catch (e) {
       print('유저 타이머 생성 오류: $e');
-      rethrow;
+      return UserTimerCreateResponse(
+        code: 500,
+        status: 'error',
+        message: '유저 타이머 생성 실패: $e',
+        data: null,
+      );
     }
   }
 
-  // 유저 타이머 조회
-  Future<UserTimer?> fetchUserTimer(String timerId) async {
+  Future<UserTimerResponseDto> fetchUserTimer(String timerId) async {
     try {
       final data = await FirebaseUtils.fetchDocument('user_timers', timerId);
       if (data != null) {
-        return UserTimer.fromJson(data);
+        return UserTimerResponseDto(
+          code: 200,
+          status: 'success',
+          message: '유저 타이머 조회 성공',
+          data: UserTimerResponse(
+              timer: UserTimer.fromJson(data, docId: timerId)),
+        );
       }
-      return null;
+      return UserTimerResponseDto(
+        code: 404,
+        status: 'not_found',
+        message: '유저 타이머를 찾을 수 없습니다.',
+        data: null,
+      );
     } catch (e) {
       print('유저 타이머 조회 오류: $e');
-      return null;
+      return UserTimerResponseDto(
+        code: 500,
+        status: 'error',
+        message: '유저 타이머 조회 실패: $e',
+        data: null,
+      );
     }
   }
 
-  // 유저 타이머 리스트 조회
-  Future<UserTimerListResponse> fetchUserTimers() async {
+  Future<UserTimerListResponseDto> fetchUserTimers() async {
     try {
-      final data =
-          await FirebaseUtils.fetchCollection(collection: 'user_timers');
-      final timers = data.map((item) => UserTimer.fromJson(item)).toList();
-      return UserTimerListResponse(timers: timers);
+      final snapshot =
+          await FirebaseFirestore.instance.collection('user_timers').get();
+      final timers = snapshot.docs.map((doc) {
+        return UserTimer.fromJson(doc.data(), docId: doc.id);
+      }).toList();
+      return UserTimerListResponseDto(
+        code: 200,
+        status: 'success',
+        message: '유저 타이머 리스트 조회 성공',
+        data: UserTimerListResponse(timers: timers),
+      );
     } catch (e) {
       print('유저 타이머 리스트 조회 오류: $e');
-      rethrow;
+      return UserTimerListResponseDto(
+        code: 500,
+        status: 'error',
+        message: '유저 타이머 리스트 조회 실패: $e',
+        data: null,
+      );
     }
   }
 
-  // 유저 타이머 수정
-  Future<UserTimer> updateUserTimer(
+  Future<UserTimerUpdateResponse> updateUserTimer(
       String timerId, UserTimerUpdateRequest request) async {
     try {
       await FirebaseUtils.updateDocument(
           'user_timers', timerId, request.toJson());
       final data = await FirebaseUtils.fetchDocument('user_timers', timerId);
       if (data != null) {
-        return UserTimer.fromJson(data);
+        return UserTimerUpdateResponse(
+          code: 200,
+          status: 'success',
+          message: '유저 타이머 수정 성공',
+          data: UserTimer.fromJson(data, docId: timerId),
+        );
       }
       throw Exception('수정된 유저 타이머를 조회하지 못했습니다.');
     } catch (e) {
       print('유저 타이머 수정 오류: $e');
-      rethrow;
+      return UserTimerUpdateResponse(
+        code: 500,
+        status: 'error',
+        message: '유저 타이머 수정 실패: $e',
+        data: null,
+      );
     }
   }
 
-  // 유저 타이머 삭제
-  Future<void> deleteUserTimer(String timerId) async {
+  Future<UserTimerDeleteResponse> deleteUserTimer(String timerId) async {
     try {
       await FirebaseUtils.deleteDocument('user_timers', timerId);
+      return UserTimerDeleteResponse(
+        code: 200,
+        status: 'success',
+        message: '유저 타이머 삭제 성공',
+        data: null,
+      );
     } catch (e) {
       print('유저 타이머 삭제 오류: $e');
-      rethrow;
+      return UserTimerDeleteResponse(
+        code: 500,
+        status: 'error',
+        message: '유저 타이머 삭제 실패: $e',
+        data: null,
+      );
     }
   }
 }

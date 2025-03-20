@@ -25,6 +25,24 @@ class InboxCreateRequest {
   }
 }
 
+// 인박스 단일 조회 응답 DTO (추가)
+class InboxResponse {
+  final Inbox inbox;
+
+  InboxResponse({required this.inbox});
+
+  factory InboxResponse.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
+    return InboxResponse(
+      inbox: Inbox.fromJson(json, docId: docId),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return inbox.toJson();
+  }
+}
+
 // 인박스 리스트 조회 응답 DTO (페이지네이션 포함)
 class InboxListResponse {
   final List<Inbox> data;
@@ -38,7 +56,8 @@ class InboxListResponse {
   factory InboxListResponse.fromJson(Map<String, dynamic> json) {
     return InboxListResponse(
       data: (json['data'] as List<dynamic>)
-          .map((item) => Inbox.fromJson(item as Map<String, dynamic>))
+          .map((item) => Inbox.fromJson(item as Map<String, dynamic>,
+              docId: item['content_id'] ?? ''))
           .toList(),
       meta: PaginationMeta.fromJson(json['meta'] as Map<String, dynamic>),
     );
@@ -78,7 +97,8 @@ class InboxUpdateRequest {
 }
 
 // BaseResponse 적용
-typedef InboxCreateResponse = BaseResponse<Inbox>;
+typedef InboxCreateResponse = BaseResponse<InboxResponse>;
+typedef InboxGetResponse = BaseResponse<InboxResponse>;
 typedef InboxListResponseDto = BaseResponse<InboxListResponse>;
-typedef InboxUpdateResponse = BaseResponse<Inbox>;
+typedef InboxUpdateResponse = BaseResponse<InboxResponse>;
 typedef InboxDeleteResponse = BaseResponse<void>;

@@ -19,9 +19,10 @@ class DefaultTag {
     this.updatedAt,
   });
 
-  factory DefaultTag.fromJson(Map<String, dynamic> json) {
+  factory DefaultTag.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
     return DefaultTag(
-      defaultTagId: json['default_tag_id'] as String,
+      defaultTagId: docId,
       tagName: json['tag_name'] as String,
       type: json['type'] as String,
       category: json['category'] as String?,
@@ -35,7 +36,6 @@ class DefaultTag {
 
   Map<String, dynamic> toJson() {
     return {
-      'default_tag_id': defaultTagId,
       'tag_name': tagName,
       'type': type,
       'category': category,

@@ -8,27 +8,28 @@ class ActionableStepContextTagService {
       {required ActionableStepContextTagRepository repository})
       : _repository = repository;
 
-  Future<ActionableStepContextTagResponse> createActionableStepContextTag(
+  Future<ActionableStepContextTagCreateResponse> createActionableStepContextTag(
       ActionableStepContextTagCreateRequest request) async {
     return await _repository.createActionableStepContextTag(request);
   }
 
-  Future<ActionableStepContextTagResponse?> getActionableStepContextTag(
+  Future<ActionableStepContextTagGetResponse> getActionableStepContextTag(
       String tagId) async {
     return await _repository.fetchActionableStepContextTag(tagId);
   }
 
-  Future<ActionableStepContextTagListResponse>
+  Future<ActionableStepContextTagListResponseDto>
       getActionableStepContextTags() async {
     return await _repository.fetchActionableStepContextTags();
   }
 
-  Future<ActionableStepContextTagResponse> updateActionableStepContextTag(
+  Future<ActionableStepContextTagUpdateResponse> updateActionableStepContextTag(
       String tagId, ActionableStepContextTagUpdateRequest request) async {
     return await _repository.updateActionableStepContextTag(tagId, request);
   }
 
-  Future<void> deleteActionableStepContextTag(String tagId) async {
-    await _repository.deleteActionableStepContextTag(tagId);
+  Future<ActionableStepContextTagDeleteResponse> deleteActionableStepContextTag(
+      String tagId) async {
+    return await _repository.deleteActionableStepContextTag(tagId);
   }
 }

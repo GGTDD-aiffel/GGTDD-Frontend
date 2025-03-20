@@ -7,25 +7,25 @@ class ParaphraseService {
   ParaphraseService({required ParaphraseRepository repository})
       : _repository = repository;
 
-  Future<ParaphraseResponse> createParaphrase(
+  Future<ParaphraseCreateResponse> createParaphrase(
       ParaphraseCreateRequest request) async {
     return await _repository.createParaphrase(request);
   }
 
-  Future<ParaphraseResponse?> getParaphrase(String paraphraseId) async {
+  Future<ParaphraseGetResponse> getParaphrase(String paraphraseId) async {
     return await _repository.fetchParaphrase(paraphraseId);
   }
 
-  Future<ParaphraseListResponse> getParaphrases() async {
+  Future<ParaphraseListResponseDto> getParaphrases() async {
     return await _repository.fetchParaphrases();
   }
 
-  Future<ParaphraseResponse> updateParaphrase(
+  Future<ParaphraseUpdateResponse> updateParaphrase(
       String paraphraseId, ParaphraseUpdateRequest request) async {
     return await _repository.updateParaphrase(paraphraseId, request);
   }
 
-  Future<void> deleteParaphrase(String paraphraseId) async {
-    await _repository.deleteParaphrase(paraphraseId);
+  Future<ParaphraseDeleteResponse> deleteParaphrase(String paraphraseId) async {
+    return await _repository.deleteParaphrase(paraphraseId);
   }
 }

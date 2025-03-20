@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:ggtdd_frontend/data/model/api_default_context_model.dart';
 import 'package:ggtdd_frontend/data/services/default_context_service.dart';
+import 'package:ggtdd_frontend/ui/domain/models/default_context_model.dart';
 
 class DefaultContextController extends ChangeNotifier {
   final DefaultContextService _service;
-  List<DefaultContextResponse> _contexts = [];
-  DefaultContextResponse? _context;
+  List<DefaultContext> _contexts = [];
+  DefaultContext? _context;
   bool _isLoading = false;
 
-  List<DefaultContextResponse> get contexts => _contexts;
-  DefaultContextResponse? get context => _context;
+  List<DefaultContext> get contexts => _contexts;
+  DefaultContext? get context => _context;
   bool get isLoading => _isLoading;
 
   DefaultContextController({required DefaultContextService service})
@@ -20,7 +21,12 @@ class DefaultContextController extends ChangeNotifier {
     notifyListeners();
     try {
       final response = await _service.getDefaultContexts();
-      _contexts = response.data;
+      if (response.code == 200 && response.data != null) {
+        _contexts = response.data!.contexts;
+        print('기본 맥락 리스트 조회 성공: ${response.message}');
+      } else {
+        print('기본 맥락 리스트 조회 실패: ${response.message} (code: ${response.code})');
+      }
     } catch (e) {
       print('기본 맥락 리스트 조회 오류: $e');
     } finally {
@@ -33,7 +39,13 @@ class DefaultContextController extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      _context = await _service.getDefaultContext(contextId);
+      final response = await _service.getDefaultContext(contextId);
+      if (response.code == 200 && response.data != null) {
+        _context = response.data!.context;
+        print('기본 맥락 조회 성공: ${response.message}');
+      } else {
+        print('기본 맥락 조회 실패: ${response.message} (code: ${response.code})');
+      }
     } catch (e) {
       print('기본 맥락 조회 오류: $e');
     } finally {
@@ -47,7 +59,13 @@ class DefaultContextController extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      _context = await _service.updateDefaultContext(contextId, request);
+      final response = await _service.updateDefaultContext(contextId, request);
+      if (response.code == 200 && response.data != null) {
+        _context = response.data!.context;
+        print('기본 맥락 수정 성공: ${response.message}');
+      } else {
+        print('기본 맥락 수정 실패: ${response.message} (code: ${response.code})');
+      }
     } catch (e) {
       print('기본 맥락 수정 오류: $e');
     } finally {

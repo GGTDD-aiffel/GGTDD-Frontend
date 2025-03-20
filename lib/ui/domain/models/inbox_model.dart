@@ -19,9 +19,9 @@ class Inbox {
     required this.isSentToRecognition,
   });
 
-  factory Inbox.fromJson(Map<String, dynamic> json) {
+  factory Inbox.fromJson(Map<String, dynamic> json, {required String docId}) {
     return Inbox(
-      contentId: json['content_id'] as String,
+      contentId: docId,
       userId: json['user_id'] as String,
       content: json['content'] as String,
       createdAt: (json['created_at'] as Timestamp).toDate(),
@@ -35,7 +35,6 @@ class Inbox {
 
   Map<String, dynamic> toJson() {
     return {
-      'content_id': contentId,
       'user_id': userId,
       'content': content,
       'created_at': Timestamp.fromDate(createdAt),

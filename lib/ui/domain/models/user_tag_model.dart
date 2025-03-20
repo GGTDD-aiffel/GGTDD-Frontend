@@ -23,9 +23,9 @@ class UserTag {
     this.updatedAt,
   });
 
-  factory UserTag.fromJson(Map<String, dynamic> json) {
+  factory UserTag.fromJson(Map<String, dynamic> json, {required String docId}) {
     return UserTag(
-      userTagId: json['user_tag_id'] as String,
+      userTagId: docId,
       userId: json['user_id'] as String,
       defaultTagId: json['default_tag_id'] as String?,
       userContextId: json['user_context_id'] as String,
@@ -41,7 +41,6 @@ class UserTag {
 
   Map<String, dynamic> toJson() {
     return {
-      'user_tag_id': userTagId,
       'user_id': userId,
       'default_tag_id': defaultTagId,
       'user_context_id': userContextId,

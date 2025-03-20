@@ -17,10 +17,10 @@ class ActionableStepContextTag {
     this.updatedAt,
   });
 
-  factory ActionableStepContextTag.fromJson(Map<String, dynamic> json) {
+  factory ActionableStepContextTag.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
     return ActionableStepContextTag(
-      actionableStepContextTagId:
-          json['actionable_step_context_tag_id'] as String,
+      actionableStepContextTagId: docId,
       actionableStepId: json['actionable_step_id'] as String,
       userContextId: json['user_context_id'] as String?,
       userTagId: json['user_tag_id'] as String?,
@@ -33,7 +33,6 @@ class ActionableStepContextTag {
 
   Map<String, dynamic> toJson() {
     return {
-      'actionable_step_context_tag_id': actionableStepContextTagId,
       'actionable_step_id': actionableStepId,
       'user_context_id': userContextId,
       'user_tag_id': userTagId,

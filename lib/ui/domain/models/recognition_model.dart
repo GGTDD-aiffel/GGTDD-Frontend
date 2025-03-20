@@ -13,9 +13,10 @@ class Recognition {
     required this.isProcessed,
   });
 
-  factory Recognition.fromJson(Map<String, dynamic> json) {
+  factory Recognition.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
     return Recognition(
-      recognitionId: json['recognition_id'] as String,
+      recognitionId: docId,
       contentId: json['content_id'] as String,
       createdAt: (json['created_at'] as Timestamp).toDate(),
       isProcessed: json['is_processed'] as bool,
@@ -24,7 +25,6 @@ class Recognition {
 
   Map<String, dynamic> toJson() {
     return {
-      'recognition_id': recognitionId,
       'content_id': contentId,
       'created_at': Timestamp.fromDate(createdAt),
       'is_processed': isProcessed,

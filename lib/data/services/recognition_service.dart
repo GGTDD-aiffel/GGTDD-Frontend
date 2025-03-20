@@ -7,25 +7,26 @@ class RecognitionService {
   RecognitionService({required RecognitionRepository repository})
       : _repository = repository;
 
-  Future<RecognitionResponse> createRecognition(
+  Future<RecognitionCreateResponse> createRecognition(
       RecognitionCreateRequest request) async {
     return await _repository.createRecognition(request);
   }
 
-  Future<RecognitionResponse?> getRecognition(String recognitionId) async {
+  Future<RecognitionGetResponse> getRecognition(String recognitionId) async {
     return await _repository.fetchRecognition(recognitionId);
   }
 
-  Future<RecognitionListResponse> getRecognitions() async {
+  Future<RecognitionListResponseDto> getRecognitions() async {
     return await _repository.fetchRecognitions();
   }
 
-  Future<RecognitionResponse> updateRecognition(
+  Future<RecognitionUpdateResponse> updateRecognition(
       String recognitionId, RecognitionUpdateRequest request) async {
     return await _repository.updateRecognition(recognitionId, request);
   }
 
-  Future<void> deleteRecognition(String recognitionId) async {
-    await _repository.deleteRecognition(recognitionId);
+  Future<RecognitionDeleteResponse> deleteRecognition(
+      String recognitionId) async {
+    return await _repository.deleteRecognition(recognitionId);
   }
 }

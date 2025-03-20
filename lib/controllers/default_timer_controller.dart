@@ -21,7 +21,12 @@ class DefaultTimerController extends ChangeNotifier {
     notifyListeners();
     try {
       final response = await _service.getDefaultTimers();
-      _timers = response.timers;
+      if (response.code == 200 && response.data != null) {
+        _timers = response.data!.timers;
+        print('기본 타이머 리스트 조회 성공: ${response.message}');
+      } else {
+        print('기본 타이머 리스트 조회 실패: ${response.message} (code: ${response.code})');
+      }
     } catch (e) {
       print('기본 타이머 리스트 조회 오류: $e');
     } finally {
@@ -34,7 +39,13 @@ class DefaultTimerController extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      _timer = await _service.getDefaultTimer(timerId);
+      final response = await _service.getDefaultTimer(timerId);
+      if (response.code == 200 && response.data != null) {
+        _timer = response.data!.timer;
+        print('기본 타이머 조회 성공: ${response.message}');
+      } else {
+        print('기본 타이머 조회 실패: ${response.message} (code: ${response.code})');
+      }
     } catch (e) {
       print('기본 타이머 조회 오류: $e');
     } finally {
@@ -48,7 +59,13 @@ class DefaultTimerController extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      _timer = await _service.updateDefaultTimer(timerId, request);
+      final response = await _service.updateDefaultTimer(timerId, request);
+      if (response.code == 200 && response.data != null) {
+        _timer = response.data;
+        print('기본 타이머 수정 성공: ${response.message}');
+      } else {
+        print('기본 타이머 수정 실패: ${response.message} (code: ${response.code})');
+      }
     } catch (e) {
       print('기본 타이머 수정 오류: $e');
     } finally {

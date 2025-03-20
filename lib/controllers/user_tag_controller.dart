@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:ggtdd_frontend/data/model/api_user_tag_model.dart';
 import 'package:ggtdd_frontend/data/services/user_tag_service.dart';
+import 'package:ggtdd_frontend/ui/domain/models/user_tag_model.dart';
 
 class UserTagController extends ChangeNotifier {
   final UserTagService _service;
-  List<UserTagResponse> _tags = [];
-  UserTagResponse? _tag;
+  List<UserTag> _tags = [];
+  UserTag? _tag;
   bool _isLoading = false;
 
-  List<UserTagResponse> get tags => _tags;
-  UserTagResponse? get tag => _tag;
+  List<UserTag> get tags => _tags;
+  UserTag? get tag => _tag;
   bool get isLoading => _isLoading;
 
   UserTagController({required UserTagService service}) : _service = service;
@@ -19,7 +20,12 @@ class UserTagController extends ChangeNotifier {
     notifyListeners();
     try {
       final response = await _service.getUserTags();
-      _tags = response.data;
+      if (response.code == 200 && response.data != null) {
+        _tags = response.data!.tags;
+        print('유저 태그 리스트 조회 성공: ${response.message}');
+      } else {
+        print('유저 태그 리스트 조회 실패: ${response.message} (code: ${response.code})');
+      }
     } catch (e) {
       print('유저 태그 리스트 조회 오류: $e');
     } finally {
@@ -32,7 +38,13 @@ class UserTagController extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      _tag = await _service.getUserTag(tagId);
+      final response = await _service.getUserTag(tagId);
+      if (response.code == 200 && response.data != null) {
+        _tag = response.data!.tag;
+        print('유저 태그 조회 성공: ${response.message}');
+      } else {
+        print('유저 태그 조회 실패: ${response.message} (code: ${response.code})');
+      }
     } catch (e) {
       print('유저 태그 조회 오류: $e');
     } finally {
@@ -45,7 +57,13 @@ class UserTagController extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      _tag = await _service.updateUserTag(tagId, request);
+      final response = await _service.updateUserTag(tagId, request);
+      if (response.code == 200 && response.data != null) {
+        _tag = response.data!.tag;
+        print('유저 태그 수정 성공: ${response.message}');
+      } else {
+        print('유저 태그 수정 실패: ${response.message} (code: ${response.code})');
+      }
     } catch (e) {
       print('유저 태그 수정 오류: $e');
     } finally {

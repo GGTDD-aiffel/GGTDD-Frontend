@@ -15,9 +15,10 @@ class TempActionableStep {
     required this.createdAt,
   });
 
-  factory TempActionableStep.fromJson(Map<String, dynamic> json) {
+  factory TempActionableStep.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
     return TempActionableStep(
-      tempActionableStepId: json['temp_actionable_step_id'] as String,
+      tempActionableStepId: docId,
       recognitionId: json['recognition_id'] as String,
       weekNumber: json['week_number'] as int,
       stepContent: json['step_content'] as String,
@@ -27,7 +28,6 @@ class TempActionableStep {
 
   Map<String, dynamic> toJson() {
     return {
-      'temp_actionable_step_id': tempActionableStepId,
       'recognition_id': recognitionId,
       'week_number': weekNumber,
       'step_content': stepContent,

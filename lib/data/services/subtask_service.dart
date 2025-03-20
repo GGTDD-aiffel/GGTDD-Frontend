@@ -7,24 +7,25 @@ class SubtaskService {
   SubtaskService({required SubtaskRepository repository})
       : _repository = repository;
 
-  Future<SubtaskResponse> createSubtask(SubtaskCreateRequest request) async {
+  Future<SubtaskCreateResponse> createSubtask(
+      SubtaskCreateRequest request) async {
     return await _repository.createSubtask(request);
   }
 
-  Future<SubtaskResponse?> getSubtask(String subtaskId) async {
+  Future<SubtaskGetResponse> getSubtask(String subtaskId) async {
     return await _repository.fetchSubtask(subtaskId);
   }
 
-  Future<SubtaskListResponse> getSubtasks() async {
+  Future<SubtaskListResponseDto> getSubtasks() async {
     return await _repository.fetchSubtasks();
   }
 
-  Future<SubtaskResponse> updateSubtask(
+  Future<SubtaskUpdateResponse> updateSubtask(
       String subtaskId, SubtaskUpdateRequest request) async {
     return await _repository.updateSubtask(subtaskId, request);
   }
 
-  Future<void> deleteSubtask(String subtaskId) async {
-    await _repository.deleteSubtask(subtaskId);
+  Future<SubtaskDeleteResponse> deleteSubtask(String subtaskId) async {
+    return await _repository.deleteSubtask(subtaskId);
   }
 }

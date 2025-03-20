@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:ggtdd_frontend/data/model/api_temp_actionable_step_model.dart';
 import 'package:ggtdd_frontend/data/services/temp_actionable_step_service.dart';
+import 'package:ggtdd_frontend/ui/domain/models/temp_actionable_step_model.dart';
 
 class TempActionableStepController extends ChangeNotifier {
   final TempActionableStepService _service;
-  List<TempActionableStepResponse> _steps = [];
-  TempActionableStepResponse? _step;
+  List<TempActionableStep> _steps = [];
+  TempActionableStep? _step;
   bool _isLoading = false;
 
-  List<TempActionableStepResponse> get steps => _steps;
-  TempActionableStepResponse? get step => _step;
+  List<TempActionableStep> get steps => _steps;
+  TempActionableStep? get step => _step;
   bool get isLoading => _isLoading;
 
   TempActionableStepController({required TempActionableStepService service})
@@ -20,7 +21,13 @@ class TempActionableStepController extends ChangeNotifier {
     notifyListeners();
     try {
       final response = await _service.getTempActionableSteps();
-      _steps = response.data;
+      if (response.code == 200 && response.data != null) {
+        _steps = response.data!.steps;
+        print('임시 실행 단계 리스트 조회 성공: ${response.message}');
+      } else {
+        print(
+            '임시 실행 단계 리스트 조회 실패: ${response.message} (code: ${response.code})');
+      }
     } catch (e) {
       print('임시 실행 단계 리스트 조회 오류: $e');
     } finally {
@@ -33,7 +40,13 @@ class TempActionableStepController extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      _step = await _service.getTempActionableStep(stepId);
+      final response = await _service.getTempActionableStep(stepId);
+      if (response.code == 200 && response.data != null) {
+        _step = response.data!.step;
+        print('임시 실행 단계 조회 성공: ${response.message}');
+      } else {
+        print('임시 실행 단계 조회 실패: ${response.message} (code: ${response.code})');
+      }
     } catch (e) {
       print('임시 실행 단계 조회 오류: $e');
     } finally {
@@ -47,7 +60,13 @@ class TempActionableStepController extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      _step = await _service.updateTempActionableStep(stepId, request);
+      final response = await _service.updateTempActionableStep(stepId, request);
+      if (response.code == 200 && response.data != null) {
+        _step = response.data!.step;
+        print('임시 실행 단계 수정 성공: ${response.message}');
+      } else {
+        print('임시 실행 단계 수정 실패: ${response.message} (code: ${response.code})');
+      }
     } catch (e) {
       print('임시 실행 단계 수정 오류: $e');
     } finally {

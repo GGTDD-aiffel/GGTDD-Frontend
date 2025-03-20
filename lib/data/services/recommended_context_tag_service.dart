@@ -8,28 +8,30 @@ class RecommendedContextTagService {
       {required RecommendedContextTagRepository repository})
       : _repository = repository;
 
-  Future<RecommendedContextTagResponse> createRecommendedContextTag(
+  Future<RecommendedContextTagCreateResponse> createRecommendedContextTag(
       RecommendedContextTagCreateRequest request) async {
     return await _repository.createRecommendedContextTag(request);
   }
 
-  Future<RecommendedContextTagResponse?> getRecommendedContextTag(
+  Future<RecommendedContextTagGetResponse> getRecommendedContextTag(
       String recommendationId) async {
     return await _repository.fetchRecommendedContextTag(recommendationId);
   }
 
-  Future<RecommendedContextTagListResponse> getRecommendedContextTags() async {
+  Future<RecommendedContextTagListResponseDto>
+      getRecommendedContextTags() async {
     return await _repository.fetchRecommendedContextTags();
   }
 
-  Future<RecommendedContextTagResponse> updateRecommendedContextTag(
+  Future<RecommendedContextTagUpdateResponse> updateRecommendedContextTag(
       String recommendationId,
       RecommendedContextTagUpdateRequest request) async {
     return await _repository.updateRecommendedContextTag(
         recommendationId, request);
   }
 
-  Future<void> deleteRecommendedContextTag(String recommendationId) async {
-    await _repository.deleteRecommendedContextTag(recommendationId);
+  Future<RecommendedContextTagDeleteResponse> deleteRecommendedContextTag(
+      String recommendationId) async {
+    return await _repository.deleteRecommendedContextTag(recommendationId);
   }
 }

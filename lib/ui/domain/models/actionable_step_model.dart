@@ -21,9 +21,10 @@ class ActionableStep {
     this.updatedAt,
   });
 
-  factory ActionableStep.fromJson(Map<String, dynamic> json) {
+  factory ActionableStep.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
     return ActionableStep(
-      actionableStepId: json['actionable_step_id'] as String,
+      actionableStepId: docId,
       contentId: json['content_id'] as String,
       weekNumber: json['week_number'] as int,
       stepContent: json['step_content'] as String,
@@ -38,7 +39,6 @@ class ActionableStep {
 
   Map<String, dynamic> toJson() {
     return {
-      'actionable_step_id': actionableStepId,
       'content_id': contentId,
       'week_number': weekNumber,
       'step_content': stepContent,

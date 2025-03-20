@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:ggtdd_frontend/data/model/api_user_context_model.dart';
 import 'package:ggtdd_frontend/data/services/user_context_service.dart';
+import 'package:ggtdd_frontend/ui/domain/models/user_context_model.dart';
 
 class UserContextController extends ChangeNotifier {
   final UserContextService _service;
-  List<UserContextResponse> _contexts = [];
-  UserContextResponse? _context;
+  List<UserContext> _contexts = [];
+  UserContext? _context;
   bool _isLoading = false;
 
-  List<UserContextResponse> get contexts => _contexts;
-  UserContextResponse? get context => _context;
+  List<UserContext> get contexts => _contexts;
+  UserContext? get context => _context;
   bool get isLoading => _isLoading;
 
   UserContextController({required UserContextService service})
@@ -20,7 +21,12 @@ class UserContextController extends ChangeNotifier {
     notifyListeners();
     try {
       final response = await _service.getUserContexts();
-      _contexts = response.data;
+      if (response.code == 200 && response.data != null) {
+        _contexts = response.data!.contexts;
+        print('유저 맥락 리스트 조회 성공: ${response.message}');
+      } else {
+        print('유저 맥락 리스트 조회 실패: ${response.message} (code: ${response.code})');
+      }
     } catch (e) {
       print('유저 맥락 리스트 조회 오류: $e');
     } finally {
@@ -33,7 +39,13 @@ class UserContextController extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      _context = await _service.getUserContext(contextId);
+      final response = await _service.getUserContext(contextId);
+      if (response.code == 200 && response.data != null) {
+        _context = response.data!.context;
+        print('유저 맥락 조회 성공: ${response.message}');
+      } else {
+        print('유저 맥락 조회 실패: ${response.message} (code: ${response.code})');
+      }
     } catch (e) {
       print('유저 맥락 조회 오류: $e');
     } finally {
@@ -47,7 +59,13 @@ class UserContextController extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      _context = await _service.updateUserContext(contextId, request);
+      final response = await _service.updateUserContext(contextId, request);
+      if (response.code == 200 && response.data != null) {
+        _context = response.data!.context;
+        print('유저 맥락 수정 성공: ${response.message}');
+      } else {
+        print('유저 맥락 수정 실패: ${response.message} (code: ${response.code})');
+      }
     } catch (e) {
       print('유저 맥락 수정 오류: $e');
     } finally {

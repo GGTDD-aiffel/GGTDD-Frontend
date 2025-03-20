@@ -7,25 +7,26 @@ class DefaultContextService {
   DefaultContextService({required DefaultContextRepository repository})
       : _repository = repository;
 
-  Future<DefaultContextResponse> createDefaultContext(
+  Future<DefaultContextCreateResponse> createDefaultContext(
       DefaultContextCreateRequest request) async {
     return await _repository.createDefaultContext(request);
   }
 
-  Future<DefaultContextResponse?> getDefaultContext(String contextId) async {
+  Future<DefaultContextGetResponse> getDefaultContext(String contextId) async {
     return await _repository.fetchDefaultContext(contextId);
   }
 
-  Future<DefaultContextListResponse> getDefaultContexts() async {
+  Future<DefaultContextListResponseDto> getDefaultContexts() async {
     return await _repository.fetchDefaultContexts();
   }
 
-  Future<DefaultContextResponse> updateDefaultContext(
+  Future<DefaultContextUpdateResponse> updateDefaultContext(
       String contextId, DefaultContextUpdateRequest request) async {
     return await _repository.updateDefaultContext(contextId, request);
   }
 
-  Future<void> deleteDefaultContext(String contextId) async {
-    await _repository.deleteDefaultContext(contextId);
+  Future<DefaultContextDeleteResponse> deleteDefaultContext(
+      String contextId) async {
+    return await _repository.deleteDefaultContext(contextId);
   }
 }

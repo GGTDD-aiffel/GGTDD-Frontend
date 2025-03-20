@@ -17,9 +17,10 @@ class UserContext {
     this.updatedAt,
   });
 
-  factory UserContext.fromJson(Map<String, dynamic> json) {
+  factory UserContext.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
     return UserContext(
-      userContextId: json['user_context_id'] as String,
+      userContextId: docId,
       userId: json['user_id'] as String,
       defaultContextId: json['default_context_id'] as String?,
       contextName: json['context_name'] as String,
@@ -32,7 +33,6 @@ class UserContext {
 
   Map<String, dynamic> toJson() {
     return {
-      'user_context_id': userContextId,
       'user_id': userId,
       'default_context_id': defaultContextId,
       'context_name': contextName,

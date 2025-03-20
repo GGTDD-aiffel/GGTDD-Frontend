@@ -15,9 +15,10 @@ class UserContextTag {
     this.updatedAt,
   });
 
-  factory UserContextTag.fromJson(Map<String, dynamic> json) {
+  factory UserContextTag.fromJson(Map<String, dynamic> json,
+      {required String docId}) {
     return UserContextTag(
-      userContextTagId: json['user_context_tag_id'] as String,
+      userContextTagId: docId,
       userContextId: json['user_context_id'] as String,
       userTagId: json['user_tag_id'] as String,
       createdAt: (json['created_at'] as Timestamp).toDate(),
@@ -29,7 +30,6 @@ class UserContextTag {
 
   Map<String, dynamic> toJson() {
     return {
-      'user_context_tag_id': userContextTagId,
       'user_context_id': userContextId,
       'user_tag_id': userTagId,
       'created_at': Timestamp.fromDate(createdAt),
