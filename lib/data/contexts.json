@@ -1,0 +1,104 @@
+{
+  "회사원": {
+    "기상 및 준비": {
+      "title": "기상 및 준비",
+      "color": "blue",
+      "items": [
+        {"icon": "schedule", "text": "평일", "color": "light_purple"},
+        {"icon": "schedule", "text": "아침", "color": "light_green"},
+        {"icon": "location_on", "text": "집", "color": "light_orange"}
+      ]
+    },
+    "출퇴근길": {
+      "title": "출퇴근길",
+      "color": "blue",
+      "items": [
+        {"icon": "schedule", "text": "평일", "color": "light_purple"},
+        {"icon": "schedule", "text": "아침", "color": "light_green"},
+        {"icon": "schedule", "text": "출근", "color": "light_blue"},
+        {"icon": "schedule", "text": "퇴근", "color": "light_blue"},
+        {"icon": "schedule", "text": "자동차", "color": "light_gray"}
+      ]
+    },
+    "목적 이동": {
+      "title": "목적 이동",
+      "color": "blue",
+      "items": [
+        {"icon": "schedule", "text": "주말", "color": "light_purple"},
+        {"icon": "schedule", "text": "아침", "color": "light_green"},
+        {"icon": "schedule", "text": "이른 오후", "color": "light_green"},
+        {"icon": "schedule", "text": "저녁", "color": "light_green"},
+        {"icon": "schedule", "text": "자동차", "color": "light_gray"},
+        {"icon": "location_on", "text": "대중교통", "color": "light_gray"},
+        {"icon": "location_on", "text": "도보", "color": "light_gray"}
+      ]
+    },
+    "업무": {
+      "title": "업무",
+      "color": "blue",
+      "items": [
+        {"icon": "schedule", "text": "평일", "color": "light_purple"},
+        {"icon": "schedule", "text": "늦은오전", "color": "light_green"},
+        {"icon": "schedule", "text": "이른 오후", "color": "light_green"},
+        {"icon": "schedule", "text": "늦은오후", "color": "light_green"},
+        {"icon": "location_on", "text": "직장", "color": "light_orange"}
+      ]
+    },
+    "식사": {
+      "title": "식사",
+      "color": "blue",
+      "items": [
+        {"icon": "schedule", "text": "매일", "color": "light_purple"},
+        {"icon": "schedule", "text": "조식", "color": "light_yellow"},
+        {"icon": "schedule", "text": "중식", "color": "light_yellow"},
+        {"icon": "schedule", "text": "석식", "color": "light_yellow"},
+        {"icon": "location_on", "text": "집", "color": "light_orange"},
+        {"icon": "location_on", "text": "식당", "color": "light_orange"}
+      ]
+    },
+    "개인활동": {
+      "title": "개인활동",
+      "color": "blue",
+      "items": [
+        {"icon": "schedule", "text": "매일", "color": "light_purple"},
+        {"icon": "schedule", "text": "자유시간", "color": "light_green"},
+        {"icon": "location_on", "text": "집", "color": "light_orange"}
+      ]
+    },
+    "휴식": {
+      "title": "휴식",
+      "color": "blue",
+      "items": [
+        {"icon": "schedule", "text": "매일", "color": "light_purple"},
+        {"icon": "schedule", "text": "자유시간", "color": "light_green"},
+        {"icon": "location_on", "text": "집", "color": "light_orange"},
+        {"icon": "location_on", "text": "휴게실", "color": "light_orange"},
+        {"icon": "location_on", "text": "기타장소", "color": "light_orange"}
+      ]
+    },
+    "가족/사회 시간": {
+      "title": "가족/사회 시간",
+      "color": "blue",
+      "items": [
+        {"icon": "schedule", "text": "주말", "color": "light_purple"},
+        {"icon": "schedule", "text": "자유시간", "color": "light_green"},
+        {"icon": "location_on", "text": "집", "color": "light_orange"},
+        {"icon": "location_on", "text": "휴게실", "color": "light_orange"},
+        {"icon": "location_on", "text": "기타장소", "color": "light_orange"},
+        {"icon": "list", "text": "가족/사회", "color": "light_pink"},
+        {"icon": "list", "text": "자기계발", "color": "light_pink"},
+        {"icon": "list", "text": "약속", "color": "light_pink"},
+        {"icon": "list", "text": "외출", "color": "light_pink"}
+      ]
+    },
+    "취침전": {
+      "title": "취침전",
+      "color": "blue",
+      "items": [
+        {"icon": "schedule", "text": "매일", "color": "light_purple"},
+        {"icon": "schedule", "text": "늦은 밤", "color": "light_green"},
+        {"icon": "location_on", "text": "집", "color": "light_orange"}
+      ]
+    }
+  }
+} 
