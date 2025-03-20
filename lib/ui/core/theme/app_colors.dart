@@ -6,7 +6,7 @@ class AppColors {
   static const lightPrimaryText = Color(0xFFFFFFFF);
   static const lightGrayButton = Color(0xFFD9D9D9);
   static const lightGrayButtonText = Color(0xFF000000);
-  static const lightBackground = Color(0xFFFFFFFF);
+  static const lightBackground = Color(0xFFF5F8FF);
   static const lightTextPrimary = Color(0xFF000000);
   static const lightTextEmphasis = Color(0xFF1E90FF);
   static const lightIcon = Color(0xFF4682B4);
@@ -23,7 +23,7 @@ class AppColors {
   static const darkPrimaryText = Color(0xFFFFFFFF);
   static const darkGrayButton = Color(0xFF2A2A2A);
   static const darkGrayButtonText = Color(0xFFFFFFFF);
-  static const darkBackground = Color(0xFF121212);
+  static const darkBackground = Color(0xFF1E2A3C);
   static const darkTextPrimary = Color(0xFFE0E0E0);
   static const darkTextEmphasis = Color(0xFF87CEFA);
   static const darkIcon = Color(0xFFB0C4DE);

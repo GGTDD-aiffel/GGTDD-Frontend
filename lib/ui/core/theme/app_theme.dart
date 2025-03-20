@@ -19,7 +19,6 @@ class AppTheme {
         foregroundColor: AppColors.lightTextPrimary,
         elevation: 0,
       ),
-      // 텍스트 스타일 정의
       textTheme: TextTheme(
         displayLarge:
             TextStyle(fontSize: 34, color: AppColors.lightTextPrimary),
@@ -36,16 +35,13 @@ class AppTheme {
         labelMedium: TextStyle(fontSize: 12, color: AppColors.lightTextPrimary),
         labelSmall: TextStyle(fontSize: 10, color: AppColors.lightTextPrimary),
       ),
-      // 아이콘 테마
       iconTheme: IconThemeData(
         color: AppColors.lightIcon,
       ),
-      // Divider 테마
       dividerTheme: DividerThemeData(
         color: AppColors.lightDivider,
         thickness: 1,
       ),
-      // 카드 테마 (BorderRadius 10, 은은한 그림자)
       cardTheme: CardTheme(
         color: AppColors.lightBackground,
         elevation: 2,
@@ -54,7 +50,6 @@ class AppTheme {
           borderRadius: BorderRadius.circular(10),
         ),
       ),
-      // Input 스타일
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.lightInputBackground,
@@ -80,6 +75,15 @@ class AppTheme {
           borderSide: BorderSide(color: AppColors.lightInputError, width: 2),
         ),
       ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.lightPrimary,
+          foregroundColor: AppColors.lightPrimaryText,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
     );
   }
 
@@ -100,7 +104,6 @@ class AppTheme {
         foregroundColor: AppColors.darkTextPrimary,
         elevation: 0,
       ),
-      // 텍스트 스타일 정의
       textTheme: TextTheme(
         displayLarge: TextStyle(fontSize: 34, color: AppColors.darkTextPrimary),
         headlineLarge:
@@ -109,23 +112,20 @@ class AppTheme {
             TextStyle(fontSize: 20, color: AppColors.darkTextPrimary),
         headlineSmall:
             TextStyle(fontSize: 16, color: AppColors.darkTextPrimary),
+        bodyLarge: TextStyle(fontSize: 16, color: AppColors.darkTextPrimary),
         bodyMedium: TextStyle(fontSize: 14, color: AppColors.darkTextPrimary),
         bodySmall: TextStyle(fontSize: 12, color: AppColors.darkTextPrimary),
-        bodyLarge: TextStyle(fontSize: 16, color: AppColors.darkTextPrimary),
         labelLarge: TextStyle(fontSize: 14, color: AppColors.darkTextPrimary),
         labelMedium: TextStyle(fontSize: 12, color: AppColors.darkTextPrimary),
         labelSmall: TextStyle(fontSize: 10, color: AppColors.darkTextPrimary),
       ),
-      // 아이콘 테마
       iconTheme: IconThemeData(
         color: AppColors.darkIcon,
       ),
-      // Divider 테마
       dividerTheme: DividerThemeData(
         color: AppColors.darkDivider,
         thickness: 1,
       ),
-      // 카드 테마 (BorderRadius 10, 은은한 그림자)
       cardTheme: CardTheme(
         color: AppColors.darkBackground,
         elevation: 2,
@@ -134,7 +134,6 @@ class AppTheme {
           borderRadius: BorderRadius.circular(10),
         ),
       ),
-      // Input 스타일
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.darkInputBackground,
@@ -158,6 +157,15 @@ class AppTheme {
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4),
           borderSide: BorderSide(color: AppColors.darkInputError, width: 2),
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.darkPrimary,
+          foregroundColor: AppColors.darkPrimaryText,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
       ),
     );
