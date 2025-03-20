@@ -44,35 +44,22 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
 
   Future<void> _loadData() async {
     try {
-      print('Fetching user data for ID: ${widget.userId}');
       await _userController.fetchUser(widget.userId);
-      print('User data fetched: ${_userController.user?.user.toString()}');
 
       if (_userController.user != null &&
           _userController.user!.user.occupationId != null) {
-        print(
-            'Fetching occupation for ID: ${_userController.user!.user.occupationId}');
         await _occupationController
             .fetchOccupation(_userController.user!.user.occupationId!);
         _currentOccupationName =
             _occupationController.occupation?.occupationName ?? '직업 없음';
         _currentOccupationId = _occupationController.occupation?.occupationId;
-        print(
-            'Occupation name: $_currentOccupationName, ID: $_currentOccupationId');
       } else {
         _currentOccupationName = '직업 없음';
         _currentOccupationId = null;
-        print('No occupation ID found');
       }
 
-      print('Fetching all occupations');
       await _occupationController.fetchOccupations();
-      print(
-          'Occupations raw JSON: ${_occupationController.occupations.map((o) => o.toJson()).toList()}');
-      print(
-          'Occupations fetched: ${_occupationController.occupations.length} items');
     } catch (e) {
-      print('데이터 로드 오류: $e');
       _currentOccupationName = '직업 없음';
       _currentOccupationId = null;
     } finally {
@@ -123,14 +110,11 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                       setState(() {
                         _currentOccupationName = occupation.occupationName;
                         _currentOccupationId = occupation.occupationId;
-                        print(
-                            'Selected occupation: $_currentOccupationName, ID: $_currentOccupationId');
                       });
                       final request = UserUpdateRequest(
                         occupationId: _currentOccupationId,
                         updatedAt: DateTime.now(),
                       );
-                      print('Modal update request: ${request.toJson()}');
                       await _userController.updateUser(widget.userId, request);
                       Navigator.pop(context);
                     },
@@ -241,10 +225,8 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                                     : null,
                                 updatedAt: DateTime.now(),
                               );
-                              print('Saving with request: ${request.toJson()}');
                               await _userController.updateUser(
                                   widget.userId, request);
-                              print('User update completed');
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                     content: Text('유저 정보가 저장되었습니다.')),
