@@ -7,6 +7,7 @@ import 'package:ggtdd_frontend/data/repositories/user_repository.dart';
 import 'package:ggtdd_frontend/data/services/occupation_service.dart';
 import 'package:ggtdd_frontend/data/services/user_service.dart';
 import 'package:ggtdd_frontend/ui/core/widgets/custom_simple_app_bar.dart';
+import 'package:ggtdd_frontend/ui/core/widgets/custom_button.dart';
 
 class UserInfoScreen extends StatefulWidget {
   final String userId;
@@ -157,6 +158,9 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final buttonWidth = screenWidth * 0.9 > 400 ? 400 : screenWidth * 0.9;
+
     return Scaffold(
       appBar: const CustomSimpleAppBar(
         title: '유저 정보',
@@ -224,7 +228,8 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                         ),
                         const SizedBox(height: 20),
                         Center(
-                          child: ElevatedButton(
+                          child: CustomButton(
+                            text: '저장하기',
                             onPressed: () async {
                               final request = UserUpdateRequest(
                                 residence: _residenceController.text.isNotEmpty
@@ -245,7 +250,10 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                                     content: Text('유저 정보가 저장되었습니다.')),
                               );
                             },
-                            child: const Text('저장하기'),
+                            width: buttonWidth.toDouble(),
+                            height: 48.0,
+                            borderRadius: 10.0,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
