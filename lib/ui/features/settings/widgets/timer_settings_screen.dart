@@ -19,9 +19,7 @@ class TimerSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     final maxWidth = 400.0;
-    final dividerWidth = screenWidth * 0.9;
 
     return SettingsContainer(
       appBar: const CustomSimpleAppBar(
