@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gap/gap.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -22,7 +23,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 20),
+              const Gap(20),
               const Text(
                 'Organize your tasks, focus on what matters, and achieve your goals.',
                 style: TextStyle(
@@ -31,7 +32,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 40),
+              const Gap(40),
               ElevatedButton(
                 onPressed: () {
                   Get.toNamed('/onboarding/info');
@@ -49,7 +50,7 @@ class WelcomeScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
-              const SizedBox(height: 20),
+              const Gap(20),
               TextButton(
                 onPressed: () {
                   Get.back();

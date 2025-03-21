@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ggtdd_frontend/ui/core/bottom_nav_bar.dart';
+import 'package:ggtdd_frontend/ui/core/widgets/bottom_nav_bar.dart';
+import 'package:gap/gap.dart';
 
 class InboxScreen extends StatefulWidget {
   const InboxScreen({super.key});
@@ -86,7 +87,7 @@ class _InboxScreenState extends State<InboxScreen> {
                 'Your Inbox',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 20),
+              const Gap(20),
               Expanded(
                 child: inboxItems.isEmpty
                     ? const Center(child: Text('No items yet'))
@@ -115,8 +116,7 @@ class _InboxScreenState extends State<InboxScreen> {
                         },
                       ),
               ),
-              // Recognition으로 이동하는 버튼 추가
-              const SizedBox(height: 20),
+              const Gap(20),
               Center(
                 child: ElevatedButton(
                   onPressed: () {
@@ -135,8 +135,7 @@ class _InboxScreenState extends State<InboxScreen> {
                   ),
                 ),
               ),
-              // 입력 필드와 추가 버튼
-              const SizedBox(height: 20),
+              const Gap(20),
               Row(
                 children: [
                   Expanded(
@@ -149,7 +148,7 @@ class _InboxScreenState extends State<InboxScreen> {
                       onSubmitted: (_) => _addItem(),
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  const Gap(10),
                   ElevatedButton(
                     onPressed: _addItem,
                     style: ElevatedButton.styleFrom(

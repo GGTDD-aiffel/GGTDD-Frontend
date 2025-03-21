@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ggtdd_frontend/ui/core/bottom_nav_bar.dart';
+import 'package:ggtdd_frontend/ui/core/widgets/bottom_nav_bar.dart';
+import 'package:gap/gap.dart';
 
 class FocusTimerScreen extends StatefulWidget {
   final String id;
@@ -74,7 +75,7 @@ class _FocusTimerScreenState extends State<FocusTimerScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 20),
+              const Gap(20),
               Stack(
                 alignment: Alignment.center,
                 children: [
@@ -104,12 +105,12 @@ class _FocusTimerScreenState extends State<FocusTimerScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
+              const Gap(30),
               Text(
                 '액션스텝: ${actionDetails[widget.id] ?? 'No details'}',
                 style: const TextStyle(fontSize: 18),
               ),
-              const SizedBox(height: 20),
+              const Gap(20),
               Wrap(
                 spacing: 10,
                 runSpacing: 10,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ggtdd_frontend/ui/core/bottom_nav_bar.dart';
+import 'package:ggtdd_frontend/ui/core/widgets/bottom_nav_bar.dart';
+import 'package:gap/gap.dart';
 
 class RecognitionScreen extends StatelessWidget {
   RecognitionScreen({super.key});
@@ -25,7 +26,7 @@ class RecognitionScreen extends StatelessWidget {
                 'Clarify Your Items',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 20),
+              const Gap(20),
               Expanded(
                 child: ListView.builder(
                   itemCount: items.length,

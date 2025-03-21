@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ggtdd_frontend/ui/core/bottom_nav_bar.dart';
+import 'package:ggtdd_frontend/ui/core/widgets/bottom_nav_bar.dart';
+import 'package:gap/gap.dart';
 
 class ActionDetailScreen extends StatelessWidget {
   final String id;
@@ -140,12 +141,12 @@ class ActionDetailScreen extends StatelessWidget {
                 style:
                     const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 20),
+              const Gap(20),
               Text(
                 description,
                 style: const TextStyle(fontSize: 16),
               ),
-              const SizedBox(height: 30),
+              const Gap(30),
               Center(
                 child: ElevatedButton(
                   onPressed: () {
@@ -162,7 +163,7 @@ class ActionDetailScreen extends StatelessWidget {
                   child: const Text('집중하기', style: TextStyle(fontSize: 18)),
                 ),
               ),
-              const SizedBox(height: 20),
+              const Gap(20),
               Wrap(
                 spacing: 10,
                 runSpacing: 10,

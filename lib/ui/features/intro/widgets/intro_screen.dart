@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:async';
+import 'package:gap/gap.dart';
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({super.key});
@@ -63,7 +64,7 @@ class _IntroScreenState extends State<IntroScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            const SizedBox(height: 40),
+            const Gap(40),
             const Text(
               'GGTDD',
               style: TextStyle(
@@ -72,7 +73,7 @@ class _IntroScreenState extends State<IntroScreen> {
                 letterSpacing: 2,
               ),
             ),
-            const SizedBox(height: 20),
+            const Gap(20),
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
@@ -96,7 +97,7 @@ class _IntroScreenState extends State<IntroScreen> {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 40),
+                        const Gap(40),
                         Container(
                           width: 200,
                           height: 200,
@@ -137,7 +138,7 @@ class _IntroScreenState extends State<IntroScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            const Gap(20),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: ElevatedButton(

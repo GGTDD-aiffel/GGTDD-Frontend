@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gap/gap.dart';
 
 class OnBoardingInfoScreen extends StatelessWidget {
   const OnBoardingInfoScreen({super.key});
@@ -20,7 +21,7 @@ class OnBoardingInfoScreen extends StatelessWidget {
                 'Tell us about yourself',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 20),
+              const Gap(20),
               TextField(
                 controller: nameController,
                 decoration: const InputDecoration(
@@ -28,7 +29,7 @@ class OnBoardingInfoScreen extends StatelessWidget {
                   border: OutlineInputBorder(),
                 ),
               ),
-              const SizedBox(height: 30),
+              const Gap(30),
               ElevatedButton(
                 onPressed: () {
                   if (nameController.text.isNotEmpty) {
@@ -49,7 +50,7 @@ class OnBoardingInfoScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 18),
                 ),
               ),
-              const SizedBox(height: 20),
+              const Gap(20),
               TextButton(
                 onPressed: () => Get.back(),
                 child: const Text('Back to Welcome'),
