@@ -5,6 +5,7 @@ import 'package:ggtdd_frontend/routing/app_routes.dart';
 import 'package:ggtdd_frontend/ui/core/widgets/bottom_nav_bar.dart';
 import 'package:ggtdd_frontend/ui/core/widgets/custom_card.dart';
 import 'package:ggtdd_frontend/ui/core/widgets/custom_icon_text_button.dart';
+import 'package:ggtdd_frontend/ui/core/widgets/custom_simple_app_bar.dart';
 
 class ContextTagsScreen extends StatefulWidget {
   final String userId;
@@ -85,7 +86,7 @@ class _ContextTagScreenState extends State<ContextTagsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('맥락 설정')),
+      appBar: CustomSimpleAppBar(title: '맥락 설정'),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
