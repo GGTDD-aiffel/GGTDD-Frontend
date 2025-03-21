@@ -8,7 +8,15 @@ import 'package:ggtdd_frontend/data/services/occupation_service.dart';
 import 'package:ggtdd_frontend/data/services/user_service.dart';
 import 'package:ggtdd_frontend/ui/core/widgets/custom_simple_app_bar.dart';
 import 'package:ggtdd_frontend/ui/core/widgets/custom_button.dart';
+import 'package:ggtdd_frontend/ui/core/widgets/custom_card.dart';
+import 'package:ggtdd_frontend/ui/core/widgets/custom_icon_text_button.dart';
+import 'package:ggtdd_frontend/ui/core/widgets/mbti_model.dart';
+import 'package:ggtdd_frontend/ui/core/widgets/occupation_modal.dart';
+import 'package:ggtdd_frontend/ui/core/widgets/residence_modal.dart';
+import 'package:ggtdd_frontend/ui/features/settings/core/settings_container.dart';
+import 'package:ggtdd_frontend/ui/core/widgets/bottom_nav_bar.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 
 class UserInfoScreen extends StatefulWidget {
   final String userId;
@@ -47,22 +55,28 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     try {
       await _userController.fetchUser(widget.userId);
 
-      if (_userController.user != null &&
-          _userController.user!.user.occupationId != null) {
-        await _occupationController
-            .fetchOccupation(_userController.user!.user.occupationId!);
-        _currentOccupationName =
-            _occupationController.occupation?.occupationName ?? '직업 없음';
-        _currentOccupationId = _occupationController.occupation?.occupationId;
-      } else {
-        _currentOccupationName = '직업 없음';
-        _currentOccupationId = null;
+      if (_userController.user != null) {
+        final user = _userController.user!.user;
+        _residenceController.text = user.residence;
+        _mbtiController.text = user.mbti;
+
+        if (user.occupationId != null) {
+          await _occupationController.fetchOccupation(user.occupationId!);
+          _currentOccupationName =
+              _occupationController.occupation?.occupationName ?? '직업 없음';
+          _currentOccupationId = _occupationController.occupation?.occupationId;
+        } else {
+          _currentOccupationName = '직업 선택';
+          _currentOccupationId = null;
+        }
       }
 
       await _occupationController.fetchOccupations();
     } catch (e) {
-      _currentOccupationName = '직업 없음';
+      _currentOccupationName = '직업 선택';
       _currentOccupationId = null;
+      _residenceController.text = '거주지 선택';
+      _mbtiController.text = 'MBTI 선택';
     } finally {
       setState(() {
         _isDataLoaded = true;
@@ -80,171 +94,249 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     super.dispose();
   }
 
-  void _showOccupationModal(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          padding: const EdgeInsets.all(16.0),
-          height: 200,
-          child: AnimatedBuilder(
-            animation: _occupationController,
-            builder: (context, child) {
-              if (_occupationController.isLoading) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (_occupationController.occupations.isEmpty) {
-                return const Center(child: Text('직업 리스트가 없습니다.'));
-              }
-              return GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  childAspectRatio: 2,
-                ),
-                itemCount: _occupationController.occupations.length,
-                itemBuilder: (context, index) {
-                  final occupation = _occupationController.occupations[index];
-                  return GestureDetector(
-                    onTap: () async {
-                      setState(() {
-                        _currentOccupationName = occupation.occupationName;
-                        _currentOccupationId = occupation.occupationId;
-                      });
-                      final request = UserUpdateRequest(
-                        occupationId: _currentOccupationId,
-                        updatedAt: DateTime.now(),
-                      );
-                      await _userController.updateUser(widget.userId, request);
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Center(
-                        child: Text(
-                          occupation.occupationName,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              );
-            },
-          ),
-        );
-      },
+  void _showResidenceModal() {
+    Get.dialog(
+      ResidenceModal(
+        initialResidence: _userController.user?.user.residence,
+        onSelected: (selected) {
+          setState(() {
+            _residenceController.text = selected;
+          });
+        },
+      ),
+    );
+  }
+
+  void _showOccupationModal() {
+    Get.dialog(
+      OccupationModal(
+        initialOccupationId: _occupationController.occupation?.occupationId,
+        occupations: _occupationController.occupations.toList(),
+        onSelected: (id, name) {
+          setState(() {
+            _currentOccupationId = id;
+            _currentOccupationName = name;
+          });
+        },
+      ),
+    );
+  }
+
+  void _showMbtiModal() {
+    Get.dialog(
+      MbtiModal(
+        initialMbti: _mbtiController.text,
+        onSelected: (selected) {
+          setState(() {
+            _mbtiController.text = selected;
+          });
+        },
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final buttonWidth = screenWidth * 0.9 > 400 ? 400 : screenWidth * 0.9;
+    final maxWidth = screenWidth * 0.9 > 400 ? 400.0 : screenWidth * 0.9;
 
-    return Scaffold(
-      appBar: const CustomSimpleAppBar(
-        title: '유저 정보',
-      ),
-      body: !_isDataLoaded
-          ? const Center(child: CircularProgressIndicator())
-          : AnimatedBuilder(
-              animation:
-                  Listenable.merge([_userController, _occupationController]),
-              builder: (context, child) {
-                if (_userController.user == null) {
-                  return const Center(child: Text('유저 정보를 찾을 수 없습니다.'));
-                }
+    return !_isDataLoaded
+        ? const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          )
+        : AnimatedBuilder(
+            animation:
+                Listenable.merge([_userController, _occupationController]),
+            builder: (context, child) {
+              if (_userController.user == null) {
+                return const Scaffold(
+                  body: Center(child: Text('유저 정보를 찾을 수 없습니다.')),
+                );
+              }
 
-                final user = _userController.user!.user;
-                _nameController.text = user.name;
-                _emailController.text = user.email;
-                _birthDateController.text =
-                    user.birthDate.toIso8601String().substring(0, 10);
-                _residenceController.text = user.residence;
-                _mbtiController.text = user.mbti;
+              final user = _userController.user!.user;
+              _nameController.text = user.name;
+              _emailController.text = user.email;
+              _birthDateController.text =
+                  user.birthDate.toIso8601String().substring(0, 10);
 
-                return Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextField(
-                          controller: _nameController,
-                          decoration: const InputDecoration(labelText: '이름'),
-                        ),
-                        TextField(
-                          controller: _emailController,
-                          decoration: const InputDecoration(labelText: '이메일'),
-                        ),
-                        TextField(
-                          controller: _birthDateController,
-                          decoration: const InputDecoration(
-                              labelText: '생일 (YYYY-MM-DD)'),
-                          keyboardType: TextInputType.datetime,
-                        ),
-                        TextField(
-                          controller: _residenceController,
-                          decoration: const InputDecoration(labelText: '거주지'),
-                        ),
-                        const Gap(10),
-                        const Text('직업'),
-                        GestureDetector(
-                          onTap: () => _showOccupationModal(context),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12.0),
-                            child: Text(
-                              _currentOccupationName ?? '직업 선택',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+              return SettingsContainer(
+                appBar: const CustomSimpleAppBar(
+                  title: '유저 정보',
+                ),
+                bottomNavigationBar: const AppBottomNavBar(currentIndex: 4),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              '이름',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Color(0xFF999999),
                               ),
                             ),
-                          ),
+                            const Gap(6),
+                            CustomCard(
+                              backgroundColor: const Color(0xFFFFFFFF),
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(16),
+                              child: CustomIconTextButton(
+                                text: _nameController.text,
+                                fontSize: 14.0,
+                                padding: EdgeInsets.zero,
+                              ),
+                            ),
+                            const Gap(12),
+                            const Text(
+                              '이메일',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Color(0xFF999999),
+                              ),
+                            ),
+                            const Gap(6),
+                            CustomCard(
+                              backgroundColor: const Color(0xFFFFFFFF),
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(16),
+                              child: CustomIconTextButton(
+                                text: _emailController.text,
+                                fontSize: 14.0,
+                                padding: EdgeInsets.zero,
+                              ),
+                            ),
+                            const Gap(12),
+                            const Text(
+                              '생일',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Color(0xFF999999),
+                              ),
+                            ),
+                            const Gap(6),
+                            CustomCard(
+                              backgroundColor: const Color(0xFFFFFFFF),
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(16),
+                              child: CustomIconTextButton(
+                                text: _birthDateController.text,
+                                fontSize: 14.0,
+                                padding: EdgeInsets.zero,
+                              ),
+                            ),
+                            const Gap(12),
+                            const Text(
+                              '거주지',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Color(0xFF999999),
+                              ),
+                            ),
+                            const Gap(6),
+                            CustomCard(
+                              backgroundColor: const Color(0xFFFFFFFF),
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(16),
+                              child: CustomIconTextButton(
+                                text: _residenceController.text,
+                                fontSize: 14.0,
+                                rightIcon: Icons.arrow_forward_ios,
+                                rightIconColor:
+                                    const Color(0x999999).withOpacity(0.6),
+                                padding: EdgeInsets.zero,
+                                onPressed: () => _showResidenceModal(),
+                              ),
+                            ),
+                            const Gap(12),
+                            const Text(
+                              '직업',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Color(0xFF999999),
+                              ),
+                            ),
+                            const Gap(6),
+                            CustomCard(
+                              backgroundColor: const Color(0xFFFFFFFF),
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(16),
+                              child: CustomIconTextButton(
+                                text: _currentOccupationName ?? '직업 선택',
+                                fontSize: 14.0,
+                                rightIcon: Icons.arrow_forward_ios,
+                                rightIconColor:
+                                    const Color(0x999999).withOpacity(0.6),
+                                padding: EdgeInsets.zero,
+                                onPressed: () => _showOccupationModal(),
+                              ),
+                            ),
+                            const Gap(12),
+                            const Text(
+                              'MBTI',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Color(0xFF999999),
+                              ),
+                            ),
+                            const Gap(6),
+                            CustomCard(
+                              backgroundColor: const Color(0xFFFFFFFF),
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(16),
+                              child: CustomIconTextButton(
+                                text: _mbtiController.text,
+                                fontSize: 14.0,
+                                rightIcon: Icons.arrow_forward_ios,
+                                rightIconColor:
+                                    const Color(0x999999).withOpacity(0.6),
+                                padding: EdgeInsets.zero,
+                                onPressed: () => _showMbtiModal(),
+                              ),
+                            ),
+                            const Gap(24),
+                            CustomButton(
+                              text: '저장하기',
+                              maxWidth: maxWidth,
+                              onPressed: () async {
+                                final request = UserUpdateRequest(
+                                  residence:
+                                      _residenceController.text.isNotEmpty
+                                          ? _residenceController.text
+                                          : null,
+                                  occupationId: _currentOccupationId,
+                                  mbti: _mbtiController.text.isNotEmpty
+                                      ? _mbtiController.text
+                                      : null,
+                                  updatedAt: DateTime.now(),
+                                );
+                                await _userController.updateUser(
+                                    widget.userId, request);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text('유저 정보가 저장되었습니다.')),
+                                );
+                              },
+                              width: double.infinity,
+                              height: 48.0,
+                              borderRadius: 10.0,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.primary,
+                              textColor: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            const Gap(24),
+                          ],
                         ),
-                        TextField(
-                          controller: _mbtiController,
-                          decoration: const InputDecoration(labelText: 'MBTI'),
-                        ),
-                        const Gap(20),
-                        Center(
-                          child: CustomButton(
-                            text: '저장하기',
-                            onPressed: () async {
-                              final request = UserUpdateRequest(
-                                residence: _residenceController.text.isNotEmpty
-                                    ? _residenceController.text
-                                    : null,
-                                occupationId: _currentOccupationId,
-                                mbti: _mbtiController.text.isNotEmpty
-                                    ? _mbtiController.text
-                                    : null,
-                                updatedAt: DateTime.now(),
-                              );
-                              await _userController.updateUser(
-                                  widget.userId, request);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('유저 정보가 저장되었습니다.')),
-                              );
-                            },
-                            width: buttonWidth.toDouble(),
-                            height: 48.0,
-                            borderRadius: 10.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                );
-              },
-            ),
-    );
+                  ],
+                ),
+              );
+            },
+          );
   }
 }

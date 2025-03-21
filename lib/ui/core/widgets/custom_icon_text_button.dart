@@ -29,7 +29,7 @@ class CustomIconTextButton extends StatelessWidget {
     this.fontSize = 16,
     this.fontWeight,
     this.leftIconSize = 24,
-    this.rightIconSize = 24,
+    this.rightIconSize = 20,
     this.leftIconColor,
     this.rightIconColor,
     this.leftIconMargin = 32,
