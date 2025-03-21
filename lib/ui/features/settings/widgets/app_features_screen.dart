@@ -66,9 +66,6 @@ class _AppFeaturesScreenState extends State<AppFeaturesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final cardWidth = screenWidth > 400 ? 400.0 : screenWidth;
-
     return Scaffold(
       appBar: CustomSimpleAppBar(title: '일반 설정'),
       body: SafeArea(
@@ -110,7 +107,8 @@ class _AppFeaturesScreenState extends State<AppFeaturesScreen> {
                     ),
                     const Gap(4),
                     CustomDivider(
-                      width: cardWidth * 0.95,
+                      width: double.infinity,
+                      widthPercentage: 0.98,
                       color: const Color(0xFF999999).withOpacity(0.3),
                     ),
                     const Gap(4),
@@ -125,7 +123,8 @@ class _AppFeaturesScreenState extends State<AppFeaturesScreen> {
                       onPressed: () => _togglePageState('랜딩 페이지'),
                     ),
                     CustomDivider(
-                      width: cardWidth * 0.95,
+                      width: double.infinity,
+                      widthPercentage: 0.98,
                       color: const Color(0xFF999999).withOpacity(0.3),
                     ),
                     const Gap(4),
@@ -173,7 +172,8 @@ class _AppFeaturesScreenState extends State<AppFeaturesScreen> {
                     ),
                     const Gap(8),
                     CustomDivider(
-                      width: cardWidth * 0.95,
+                      width: double.infinity,
+                      widthPercentage: 0.98,
                       color: const Color(0xFF999999).withOpacity(0.3),
                     ),
                     const Gap(8),
@@ -186,7 +186,8 @@ class _AppFeaturesScreenState extends State<AppFeaturesScreen> {
                     ),
                     const Gap(8),
                     CustomDivider(
-                      width: cardWidth * 0.95,
+                      width: double.infinity,
+                      widthPercentage: 0.98,
                       color: const Color(0xFF999999).withOpacity(0.3),
                     ),
                     const Gap(8),

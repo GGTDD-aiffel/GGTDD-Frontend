@@ -21,7 +21,6 @@ class SettingsScreen extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final maxWidth = 400.0;
     final buttonWidth = screenWidth > maxWidth ? maxWidth : screenWidth * 0.9;
-    final cardWidth = screenWidth > maxWidth ? maxWidth : screenWidth;
 
     void _showRemoveUserModal() {
       Get.dialog(
@@ -98,7 +97,8 @@ class SettingsScreen extends StatelessWidget {
                         const Gap(8),
                         CustomDivider(
                           alignment: Alignment.centerRight,
-                          width: cardWidth * 0.85,
+                          width: double.infinity,
+                          widthPercentage: 0.90,
                         ),
                         const Gap(8),
                         CustomIconTextButton(
@@ -160,7 +160,8 @@ class SettingsScreen extends StatelessWidget {
                         const Gap(8),
                         CustomDivider(
                           alignment: Alignment.centerRight,
-                          width: cardWidth * 0.85,
+                          width: double.infinity,
+                          widthPercentage: 0.90,
                         ),
                         const Gap(8),
                         CustomIconTextButton(

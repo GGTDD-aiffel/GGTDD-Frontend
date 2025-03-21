@@ -35,7 +35,32 @@ class CustomCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(borderRadius),
         border: border ?? Border.all(color: Colors.grey.shade200),
       ),
-      child: child,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return CustomCardChildWrapper(
+            actualWidth: constraints.maxWidth,
+            child: child,
+          );
+        },
+      ),
     );
+  }
+}
+
+class CustomCardChildWrapper extends InheritedWidget {
+  final double actualWidth;
+
+  const CustomCardChildWrapper({
+    required this.actualWidth,
+    required super.child,
+  });
+
+  static CustomCardChildWrapper? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<CustomCardChildWrapper>();
+  }
+
+  @override
+  bool updateShouldNotify(CustomCardChildWrapper oldWidget) {
+    return actualWidth != oldWidget.actualWidth;
   }
 }

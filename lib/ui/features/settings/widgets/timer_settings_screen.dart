@@ -87,7 +87,11 @@ class TimerSettingsScreen extends StatelessWidget {
                               seconds: 0,
                             )),
                         const Gap(4),
-                        CustomDivider(width: dividerWidth),
+                        CustomDivider(
+                          alignment: Alignment.centerRight,
+                          width: double.infinity,
+                          widthPercentage: 0.95,
+                        ),
                         const Gap(4),
                         SimpleTextWidgetRow(
                             text: '휴식시간',
@@ -126,7 +130,11 @@ class TimerSettingsScreen extends StatelessWidget {
                               seconds: 0,
                             )),
                         const Gap(4),
-                        CustomDivider(width: dividerWidth),
+                        CustomDivider(
+                          alignment: Alignment.centerRight,
+                          width: double.infinity,
+                          widthPercentage: 0.95,
+                        ),
                         const Gap(4),
                         SimpleTextWidgetRow(
                             text: '휴식시간',
@@ -165,7 +173,11 @@ class TimerSettingsScreen extends StatelessWidget {
                               seconds: 0,
                             )),
                         const Gap(4),
-                        CustomDivider(width: dividerWidth),
+                        CustomDivider(
+                          alignment: Alignment.centerRight,
+                          width: double.infinity,
+                          widthPercentage: 0.95,
+                        ),
                         const Gap(4),
                         SimpleTextWidgetRow(
                             text: '휴식시간',
