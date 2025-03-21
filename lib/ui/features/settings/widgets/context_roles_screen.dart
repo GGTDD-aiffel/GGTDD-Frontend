@@ -28,15 +28,15 @@ class ContextRolesScreen extends StatelessWidget {
                 runSpacing: 10,
                 children: [
                   for (var role in [
-                    '학생',
-                    '개발자',
-                    '디자이너',
-                    '매니저',
-                    '작가',
-                    '연구자',
-                    '교사',
-                    '마케터',
-                    '기타'
+                    '기상 및 준비',
+                    '출퇴근길',
+                    '목적 이동',
+                    '업무',
+                    '식사',
+                    '개인활동',
+                    '휴식',
+                    '가족/사회 시간',
+                    '취침 전'
                   ])
                     ElevatedButton(
                       onPressed: () {},

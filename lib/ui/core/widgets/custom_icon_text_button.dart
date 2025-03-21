@@ -3,7 +3,8 @@ import 'package:gap/gap.dart';
 
 class CustomIconTextButton extends StatelessWidget {
   final IconData? leftIcon;
-  final String text;
+  final String? text;
+  final Widget? textWidget;
   final IconData? rightIcon;
   final VoidCallback? onPressed;
   final Color? backgroundColor;
@@ -20,7 +21,8 @@ class CustomIconTextButton extends StatelessWidget {
   const CustomIconTextButton({
     super.key,
     this.leftIcon,
-    required this.text,
+    this.text,
+    this.textWidget,
     this.rightIcon,
     this.onPressed,
     this.backgroundColor = Colors.transparent,
@@ -39,6 +41,16 @@ class CustomIconTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final defaultTextColor = textColor ?? theme.textTheme.bodyLarge?.color;
+
+    final textContent = textWidget ??
+        Text(
+          text!,
+          style: TextStyle(
+            color: defaultTextColor,
+            fontSize: fontSize,
+            fontWeight: fontWeight,
+          ),
+        );
 
     return Material(
       color: backgroundColor,
@@ -61,14 +73,7 @@ class CustomIconTextButton extends StatelessWidget {
                       Gap(leftIconMargin!),
                     ],
                     Expanded(
-                      child: Text(
-                        text,
-                        style: TextStyle(
-                          color: defaultTextColor,
-                          fontSize: fontSize,
-                          fontWeight: fontWeight,
-                        ),
-                      ),
+                      child: textContent,
                     ),
                   ],
                 ),

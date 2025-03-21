@@ -61,11 +61,17 @@ class AppRoutes {
     ),
     GetPage(
       name: settingsUserInfo,
-      page: () => UserInfoScreen(userId: Get.parameters['user_id'] ?? '1'),
+      page: () {
+        final authController = Get.find<AuthController>();
+        return UserInfoScreen(userId: authController.userId.value);
+      },
     ),
     GetPage(
       name: settingsContextTags,
-      page: () => ContextTagsScreen(userId: Get.parameters['user_id'] ?? '1'),
+      page: () {
+        final authController = Get.find<AuthController>();
+        return ContextTagsScreen(userId: authController.userId.value);
+      },
     ),
     GetPage(
       name: settingsContextRoles,
