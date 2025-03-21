@@ -7,6 +7,7 @@ import 'package:ggtdd_frontend/ui/core/widgets/custom_button.dart';
 import 'package:ggtdd_frontend/ui/core/widgets/custom_card.dart';
 import 'package:ggtdd_frontend/ui/core/widgets/custom_divider.dart';
 import 'package:ggtdd_frontend/ui/core/widgets/custom_icon_text_button.dart';
+import 'package:ggtdd_frontend/ui/core/widgets/custom_modal.dart';
 import 'package:ggtdd_frontend/ui/core/widgets/custom_simple_app_bar.dart';
 import 'package:ggtdd_frontend/ui/features/settings/core/settings_container.dart';
 
@@ -21,6 +22,30 @@ class SettingsScreen extends StatelessWidget {
     final maxWidth = 400.0;
     final buttonWidth = screenWidth > maxWidth ? maxWidth : screenWidth * 0.9;
     final cardWidth = screenWidth > maxWidth ? maxWidth : screenWidth;
+
+    void _showRemoveUserModal() {
+      Get.dialog(
+        CustomModal(
+          defaultTitle: '탈퇴하기',
+          defaultBodyText: '정말로 탈퇴하시겠습니까?',
+          onPressed: () {
+            print("탈퇴하기");
+          },
+        ),
+      );
+    }
+
+    void _showLogoutModal() {
+      Get.dialog(
+        CustomModal(
+          defaultTitle: '로그아웃',
+          defaultBodyText: '정말로 로그아웃하시겠습니까?',
+          onPressed: () {
+            print("로그아웃");
+          },
+        ),
+      );
+    }
 
     return SettingsContainer(
       appBar: const CustomSimpleAppBar(
@@ -175,9 +200,7 @@ class SettingsScreen extends StatelessWidget {
                   backgroundColor: const Color(0xFFFFFFFF),
                   textColor: const Color(0xFFFF0000),
                   fontWeight: FontWeight.bold,
-                  onPressed: () {
-                    // TODO: 탈퇴하기 로직 구현
-                  },
+                  onPressed: _showRemoveUserModal,
                 ),
                 const Gap(18),
                 CustomButton(
@@ -188,9 +211,7 @@ class SettingsScreen extends StatelessWidget {
                   backgroundColor: const Color(0xFFFFFFFF),
                   textColor: const Color(0xFFFF0000),
                   fontWeight: FontWeight.bold,
-                  onPressed: () {
-                    // TODO: 로그아웃 로직 구현
-                  },
+                  onPressed: _showLogoutModal,
                 ),
               ],
             ),
